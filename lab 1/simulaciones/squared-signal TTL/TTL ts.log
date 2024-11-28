@@ -1,0 +1,21 @@
+LTspice 24.0.12 for Windows
+Circuit: * D:\Ing electronica - unal\6. sexto semestre\Digital1\lab 1\squared-signal TTL\TTL ts.asc
+Start Time: Sun Nov 17 18:11:36 2024
+solver = Normal
+Maximum thread count: 8
+tnom = 27
+temp = 27
+method = modified trap
+WARNING: Less than two connections to node u1:u1:ua:test.  This node is used by e:u1:u1:ua:test.
+WARNING: Less than two connections to node u1:u1:ua:vth_diff.  This node is used by e:u1:u1:ua:vthdiff.
+WARNING: Less than two connections to node u1:u1:ub:test.  This node is used by e:u1:u1:ub:test.
+WARNING: Less than two connections to node u1:u1:ub:vth_diff.  This node is used by e:u1:u1:ub:vthdiff.
+Direct Newton iteration for .op point succeeded.
+
+vmax: MAX(v(out))=4.97543 FROM 0 TO 0.0004
+t0: v(out)=3.4 AT 0.000200002
+tf: v(out)=0.4 AT 0.000200003
+ts: tf-t0=5.86385e-10
+
+Total elapsed time: 0.142 seconds.
+
