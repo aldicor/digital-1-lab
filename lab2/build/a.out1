@@ -1,0 +1,12 @@
+**** module/scope: bateria2
+     Flip-Flops   : 0
+     Logic Gates  : 0
+**** module/scope: bateria2.bateria1
+     Flip-Flops   : 0
+     Logic Gates  : 7
+**** module/scope: bateria2.bateria2
+     Flip-Flops   : 0
+     Logic Gates  : 7
+**** TOTALS
+     Flip-Flops   : 0
+     Logic Gates  : 14
