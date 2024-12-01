@@ -46,7 +46,6 @@ obj_dir
 csrc 
 simv* 
 *.key 
-*.vcd
 
 #vcs + verdi
 *.log
