@@ -1,0 +1,116 @@
+$date
+	Wed Dec 18 22:39:28 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module warntb $end
+$scope module uut $end
+$var wire 4 ! carga1 [3:0] $end
+$var wire 4 " carga2 [3:0] $end
+$var wire 1 # warn2 $end
+$var wire 1 $ warn1 $end
+$scope module bateria1 $end
+$var wire 4 % carga [3:0] $end
+$var wire 1 $ warn $end
+$upscope $end
+$scope module bateria2 $end
+$var wire 4 & carga [3:0] $end
+$var wire 1 # warn $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 &
+b0 %
+1$
+1#
+b0 "
+b0 !
+$end
+#1
+0#
+0$
+b1 "
+b1 &
+b1 !
+b1 %
+#2
+b10 "
+b10 &
+b10 !
+b10 %
+#3
+b11 "
+b11 &
+b11 !
+b11 %
+#4
+b100 "
+b100 &
+b100 !
+b100 %
+#5
+b101 "
+b101 &
+b101 !
+b101 %
+#6
+b110 "
+b110 &
+b110 !
+b110 %
+#7
+b111 "
+b111 &
+b111 !
+b111 %
+#8
+b1000 "
+b1000 &
+b1000 !
+b1000 %
+#9
+b1001 "
+b1001 &
+b1001 !
+b1001 %
+#10
+b1010 "
+b1010 &
+b1010 !
+b1010 %
+#11
+b1011 "
+b1011 &
+b1011 !
+b1011 %
+#12
+b1100 "
+b1100 &
+b1100 !
+b1100 %
+#13
+b1101 "
+b1101 &
+b1101 !
+b1101 %
+#14
+b1110 "
+b1110 &
+b1110 !
+b1110 %
+#15
+b1111 "
+b1111 &
+b1111 !
+b1111 %
+#20

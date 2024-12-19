@@ -1,4 +1,4 @@
-`include "sumador.v"
+//`include "sumador.v"
 
 module restador(suma,cout_co);
     input [3:0] suma;
