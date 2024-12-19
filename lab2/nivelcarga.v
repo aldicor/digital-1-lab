@@ -19,5 +19,5 @@ module nivelcarga(A,B,green,yellow,critical,descarga1,descarga2, buzzer);
     assign green    = ~(co_s);
     assign yellow   = ~(~co_s&co_r);
     assign critical = ~(~co_s&~co_r); 
-	 assign buzzer	  = critical;
+	assign buzzer	  = critical;
 endmodule

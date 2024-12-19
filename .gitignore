@@ -83,7 +83,6 @@ vc_hdrs.h
 *.pin
 *.sld
 *.sof
-*.v.bak
 *.vpr.*
 *.root_partition.*
 *.rrp.*

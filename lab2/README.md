@@ -35,7 +35,30 @@ $$Alarma = \bar{A_3} \bar{A_2} \bar{A_1} \bar{A_0} $$
 
 En cuanto al circuito, este podría ser implementado con dos compuertas *and* que niegen las entradas, y otra compuerta *and* que tenga como entradas las salidas de las dos compuertas.
 
-En el caso de verilog, en el archivo de [descarga](descarga.v), se puede apreciar que primero se realizó un modulo para una batería que tuviera en cuenta una entrada de 4 bits (la carga de la batería) y una salida de 1 bit como la señal de alarma. Esta señal de alarma está representada por la función booleana mostrada con el uso de primitivas. En el mismo archivo se presenta un modelo donde se instancia el modulo de la alerta de batería 2 veces para hacerlo escalable, de esta manera se tienen 2 entradas de 4 bits que representan la carga de cada bateria y dos señales de descarga (que se encuentran en el mismo archivo). 
+En el caso de verilog, en el archivo de [descarga](descarga.v), se puede apreciar que primero se realizó un modulo para una batería que tuviera en cuenta una entrada de 4 bits (la carga de la batería) y una salida de 1 bit como la señal de alarma. Esta señal de alarma está representada por la función booleana mostrada con el uso de primitivas. En el mismo archivo se presenta un modelo donde se instancia el modulo de la alerta de batería 2 veces para hacerlo escalable, de esta manera se tienen 2 entradas de 4 bits que representan la carga de cada bateria y dos señales de descarga. 
+
+
+#### Sumador de 1 bit
+
+Para contruir el sumador de 4 bits fue necesario crear un bloque de sumas de 1 bit con el fin de escalarlo y resolver un problema grande con la solución de un problema más pequeño. Considerando la documentación de la guía y la teoría vista en la clase magistral, se obtienen las siguientes expresiones para las sálidas del bloque: 
+
+$$Sum = C_{in}\oplus(a \oplus b)  $$
+$$C_{out} = ab + C_{in}(a \oplus b)$$
+
+De esta manera, en el archivo donde se encuentran los módulos del [sumador](./src/sumador.v) se puede evidenciar la implementación comportamental. En primer lugar se definió un bloque 'adder' donde se reciben de entradas un bit 'a' que se suma con un bit 'b' y un acarreo de entrada 'cin'. En el módulo se define las suunma y acarreo de sálida con las formulas mostradas a partir de las primitivas de 'verilog'. 
+
+
+#### Sumador de 4 bits
+
+En este caso, en el mismo archivo del [sumador](./src/sumador.v) se define un módulo que tiene como entradas dos numeros de 4 bits que se desean sumar y un acarreo final. En el módulo se puede observar que se utilizó una metodología escalable puesto que se instancia cuatro veces el módulo sumador de 1 bit('adder') para crear la suma de 4 bits('adder4b'). 
+
+Es importante resaltar que el proceso se realizo bit a bit, en el archivo se muestra que se creo un modulo de suma de 1 bit para cada realizar la suma entre el n-esimo bit de A y B, pero para interconectar los módulos se utilizó un dato de tipo 'wire' como si fuera un acarreo temporal. De esta manera, este operador permitió conectar el acarreo de sálida $C_{out}$ del n-simo sumador de 1 bit al acarreo de entrada $C_{in}$ del siguiente sumador.    
+
+
+
+
+
+
 
 ### Diagramas
 
@@ -50,9 +73,7 @@ En el caso de verilog, en el archivo de [descarga](descarga.v), se puede aprecia
 ### Simulación del bloque de alarma de descarga
 Tal y como se explicó anteriormente, el segundo módulo de descarga resive dos buses de entradas de 4 bits (cada bus representa el nivel de carga de cada batería) y entrega dos salida de 1 bit (una para cada batería). En caso de que la primera batería no tenga carga (lo que corresponde a un 0000 binario) la primera salida será uno, independientemente del valor de la otra batería. Es decir, las salidas funcionan de manera independiente para cada batería.
 
-A continuación se muestra la simulación realizada en GTKwave para este módulo.
-
-![Simulación del módulo de descarga](imagenes_simulacion/Descarga_señales.png "Simulación módulo de descarga")
+A continuación se muestra la s*.v.bakcarga](imagenes_simulacion/Descarga_señales.png "Simulación módulo de descarga")
 
 Como se puede evidenciar en la anterior imagen, la única combinación  de las 16 posibles que genera un 1 en la salida es la de 0 (en decimal) o *oooo* en binario.
 
@@ -60,7 +81,7 @@ Como se puede evidenciar en la anterior imagen, la única combinación  de las 1
 
 
 
-
+*.v.bak
 ### Simulación del bloque comparador
 
 
