@@ -58,8 +58,24 @@ Como se puede evidenciar en la anterior imagen, la única combinación  de las 1
 
 ### Simulación del sumador de 1 y 4 bits
 
+Tal y como se mencionó anteriormente, para la implementación del sumador de 4 bits se creó primero un módulo de suma de 1 bit, con tres entradas de 1 bit (a, b, cin) y dos salidas de 1 bit (cout, sum). Mientras que para el módulo de suma de 4 bits resive dos buses de datos para cada número, cada uno de 4 bits.
+#### Suma sin *carry_out* 
+A continuación se muestra la simulación para distintos valores de a, b y *carry-in* para el sumador de 4 bits.
+![Sumador sin carry](imagenes_simulacion/sumador_sin_carry.png)
 
+Tal y como se muestra en la imagen anterior, como la suma de los números no supera a 15 (que es lo máximo que se puede representar con 4 bits), el bus de datos *sum4* efectivamente representa la suma de los números, y el *carry_out* es 0.
+#### Suma con *carry_in*
 
+En el caso en el que la suma supero el valor de 15, sí hay *carry_out* y por tanto, el resultado de *sum4* no va a corresponder con la suma real de los números, puesto que la representación de la suma requeriría de 5 bits.
+
+A continuación se muestra una simulación que ejemplifica la explicación anterior.
+![Sumador con carry](/imagenes_simulacion/sumador_con_carry.png)
+
+Como se puede observar en la anterior imagen, al sumar 8 + 8 se obtiene en la salida *sum4* el número 0, esto es debido a que 16, el resultado de la suma, en binario se escribe como 10000, por lo que al tomar los primeros 4 bits (que es el resultado que arroja *sum4*) el número representado es 0, en vez de 16. 
+Los otros ejemplos en la simulación siguien el mismo principio.
+
+#### Aclaración del módulo suma
+La razón por la que se optó implementar esta función en vez de arrojar una única salida de 5 bits, que sí representaría la suma en todos sus casos, fue por que el programa no busca conocer la suma necesarioamene, solo generar alarmas para distintos valores de carga. Más adelante se ahondará al respecto.
 
 ### Simulación del bloque comparador
 
