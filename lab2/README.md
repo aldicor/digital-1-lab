@@ -87,9 +87,6 @@ A continuación se muestra la simulación para distintos valores de a, b y *carr
 Tal y como se muestra en la imagen anterior, como la suma de los números no supera a 15 (que es lo máximo que se puede representar con 4 bits), el bus de datos *sum4* efectivamente representa la suma de los números, y el *carry_out* es 0.
 #### Suma con *carry_in*
 
-<<<<<<< HEAD
-*.v.bak
-=======
 En el caso en el que la suma supero el valor de 15, sí hay *carry_out* y por tanto, el resultado de *sum4* no va a corresponder con la suma real de los números, puesto que la representación de la suma requeriría de 5 bits.
 
 A continuación se muestra una simulación que ejemplifica la explicación anterior.
@@ -101,7 +98,6 @@ Los otros ejemplos en la simulación siguien el mismo principio.
 #### Aclaración del módulo suma
 La razón por la que se optó implementar esta función en vez de arrojar una única salida de 5 bits, que sí representaría la suma en todos sus casos, fue por que el programa no busca conocer la suma necesarioamene, solo generar alarmas para distintos valores de carga. Más adelante se ahondará al respecto.
 
->>>>>>> a91247f8af690b80091a276d6a3d457dba2e6ecc
 ### Simulación del bloque comparador
 
 
