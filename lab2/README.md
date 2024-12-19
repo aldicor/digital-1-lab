@@ -18,6 +18,25 @@ Indice:
 
 ### Descripción
 
+#### Detector de alarmas de baterias 
+
+Para cumplir con los requerimientos solicitados en la guía, se empezó con el problema más sencillo. En este caso, para implementar una señal de alerta en caso de un estado de descarga por cada bateria, se puede notar que al realizar un análisis de tabla de verdad, el único caso en el que el sistema va a activar su alarma es cuando los 4 bits esten en estado bajo. 
+
+|A_3 | A_2| A_1| A_0| Alarma|
+| ----| ---- | -----| -----| ----|
+|1| x|x|x| 0|
+|x| 1|x|x| 0|
+|x| x|1|x| 0|
+|x| x|x|1| 0|
+|0| 0|0|0| 1|
+
+Por lo que la ecuación booleana que describiría el comportamiento de la alarma de una batería sería:
+$$Alarma = \bar{A_3} \bar{A_2} \bar{A_1} \bar{A_0} $$
+
+En cuanto, al circuito este podria ser implementado con dos compuertas and que niegen las entradas, y otra compuerta and que tenga como entradas las salidas de las dos compuertas.
+
+En el caso de verilog, en el archivo de [descarga](./src/descarga.v), se puede apreciar que primero se realizo un modulo para una bateria que tuviera en cuenta una entrada de 4 bits (la carga de la batería) y una salida de 1 bit como la señal de alarma. Esta señal de alarma está representada por la función booleana mostrada con el uso de primitivas. En el mismo archivo se presenta un modelo donde se instancia el modulo de la alerta de bateria 2 veces para hacerlo escalable, de esta manera se tienen 2 entradas de 4 bits que representan la carga de cada bateria y dos señales de descarga. 
+
 ### Diagramas
 
 
