@@ -33,9 +33,9 @@ Para cumplir con los requerimientos solicitados en la guía, se empezó con el p
 Por lo que la ecuación booleana que describiría el comportamiento de la alarma de una batería sería:
 $$Alarma = \bar{A_3} \bar{A_2} \bar{A_1} \bar{A_0} $$
 
-En cuanto, al circuito este podria ser implementado con dos compuertas and que niegen las entradas, y otra compuerta and que tenga como entradas las salidas de las dos compuertas.
+En cuanto al circuito, este podría ser implementado con dos compuertas *and* que niegen las entradas, y otra compuerta *and* que tenga como entradas las salidas de las dos compuertas.
 
-En el caso de verilog, en el archivo de [descarga](./src/descarga.v), se puede apreciar que primero se realizo un modulo para una bateria que tuviera en cuenta una entrada de 4 bits (la carga de la batería) y una salida de 1 bit como la señal de alarma. Esta señal de alarma está representada por la función booleana mostrada con el uso de primitivas. En el mismo archivo se presenta un modelo donde se instancia el modulo de la alerta de bateria 2 veces para hacerlo escalable, de esta manera se tienen 2 entradas de 4 bits que representan la carga de cada bateria y dos señales de descarga. 
+En el caso de verilog, en el archivo de [descarga](descarga.v), se puede apreciar que primero se realizó un modulo para una batería que tuviera en cuenta una entrada de 4 bits (la carga de la batería) y una salida de 1 bit como la señal de alarma. Esta señal de alarma está representada por la función booleana mostrada con el uso de primitivas. En el mismo archivo se presenta un modelo donde se instancia el modulo de la alerta de batería 2 veces para hacerlo escalable, de esta manera se tienen 2 entradas de 4 bits que representan la carga de cada bateria y dos señales de descarga (que se encuentran en el mismo archivo). 
 
 ### Diagramas
 
@@ -44,9 +44,22 @@ En el caso de verilog, en el archivo de [descarga](./src/descarga.v), se puede a
 
 <!-- (Incluir las de Digital si hicieron uso de esta herramienta, pero también deben incluir simulaciones realizadas usando un simulador HDL como por ejemplo Icarus Verilog + GTKwave) -->
 
+
+
+
 ### Simulación del bloque de alarma de descarga
+Tal y como se explicó anteriormente, el segundo módulo de descarga resive dos buses de entradas de 4 bits (cada bus representa el nivel de carga de cada batería) y entrega dos salida de 1 bit (una para cada batería). En caso de que la primera batería no tenga carga (lo que corresponde a un 0000 binario) la primera salida será uno, independientemente del valor de la otra batería. Es decir, las salidas funcionan de manera independiente para cada batería.
+
+A continuación se muestra la simulación realizada en GTKwave para este módulo.
+
+![Simulación del módulo de descarga](imagenes_simulacion/Descarga_señales.png "Simulación módulo de descarga")
+
+Como se puede evidenciar en la anterior imagen, la única combinación  de las 16 posibles que genera un 1 en la salida es la de 0 (en decimal) o *oooo* en binario.
 
 ### Simulación del sumador de 1 y 4 bits
+
+
+
 
 ### Simulación del bloque comparador
 

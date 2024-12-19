@@ -1,0 +1,197 @@
+|nivelcarga
+A[0] => _.IN1
+A[0] => _.IN1
+A[1] => _.IN1
+A[1] => _.IN1
+A[2] => _.IN1
+A[2] => _.IN1
+A[3] => _.IN1
+A[3] => _.IN1
+B[0] => _.IN1
+B[0] => _.IN1
+B[1] => _.IN1
+B[1] => _.IN1
+B[2] => _.IN1
+B[2] => _.IN1
+B[3] => _.IN1
+B[3] => _.IN1
+green << adder4b:sumaAB.port2
+yellow << yellow.DB_MAX_OUTPUT_PORT_TYPE
+critical << critical.DB_MAX_OUTPUT_PORT_TYPE
+descarga1 << bateria2:alertas.port2
+descarga2 << bateria2:alertas.port3
+
+
+|nivelcarga|adder4b:sumaAB
+A[0] => A[0].IN1
+A[1] => A[1].IN1
+A[2] => A[2].IN1
+A[3] => A[3].IN1
+B[0] => B[0].IN1
+B[1] => B[1].IN1
+B[2] => B[2].IN1
+B[3] => B[3].IN1
+Cout <= adder:bit4.port3
+sum4[0] <= adder:bit1.port4
+sum4[1] <= adder:bit2.port4
+sum4[2] <= adder:bit3.port4
+sum4[3] <= adder:bit4.port4
+
+
+|nivelcarga|adder4b:sumaAB|adder:bit1
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|adder4b:sumaAB|adder:bit2
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|adder4b:sumaAB|adder:bit3
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|adder4b:sumaAB|adder:bit4
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|restador:resta
+suma[0] => suma[0].IN1
+suma[1] => suma[1].IN1
+suma[2] => suma[2].IN1
+suma[3] => suma[3].IN1
+cout_co <= adder4b:com2.port2
+
+
+|nivelcarga|restador:resta|adder4b:com2
+A[0] => A[0].IN1
+A[1] => A[1].IN1
+A[2] => A[2].IN1
+A[3] => A[3].IN1
+B[0] => B[0].IN1
+B[1] => B[1].IN1
+B[2] => B[2].IN1
+B[3] => B[3].IN1
+Cout <= adder:bit4.port3
+sum4[0] <= adder:bit1.port4
+sum4[1] <= adder:bit2.port4
+sum4[2] <= adder:bit3.port4
+sum4[3] <= adder:bit4.port4
+
+
+|nivelcarga|restador:resta|adder4b:com2|adder:bit1
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|restador:resta|adder4b:com2|adder:bit2
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|restador:resta|adder4b:com2|adder:bit3
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|restador:resta|adder4b:com2|adder:bit4
+a => sum.IN0
+a => cout.IN0
+a => cout.IN0
+b => sum.IN1
+b => cout.IN1
+b => cout.IN1
+cin => sum.IN1
+cin => cout.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+sum <= sum.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|bateria2:alertas
+carga1[0] => carga1[0].IN1
+carga1[1] => carga1[1].IN1
+carga1[2] => carga1[2].IN1
+carga1[3] => carga1[3].IN1
+carga2[0] => carga2[0].IN1
+carga2[1] => carga2[1].IN1
+carga2[2] => carga2[2].IN1
+carga2[3] => carga2[3].IN1
+warn1 <= bateria:bateria1.warn
+warn2 <= bateria:bateria2.warn
+
+
+|nivelcarga|bateria2:alertas|bateria:bateria1
+carga[0] => warn.IN0
+carga[1] => warn.IN1
+carga[2] => warn.IN0
+carga[3] => warn.IN1
+warn <= warn.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|nivelcarga|bateria2:alertas|bateria:bateria2
+carga[0] => warn.IN0
+carga[1] => warn.IN1
+carga[2] => warn.IN0
+carga[3] => warn.IN1
+warn <= warn.DB_MAX_OUTPUT_PORT_TYPE
+
+
