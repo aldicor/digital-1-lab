@@ -36,7 +36,11 @@ $$Alarma = \bar{A_3} \bar{A_2} \bar{A_1} \bar{A_0} $$
 En cuanto al circuito, este podría ser implementado con dos compuertas *and* que niegen las entradas, y otra compuerta *and* que tenga como entradas las salidas de las dos compuertas.
 
 En el caso de verilog, en el archivo de [descarga](descarga.v), se puede apreciar que primero se realizó un modulo para una batería que tuviera en cuenta una entrada de 4 bits (la carga de la batería) y una salida de 1 bit como la señal de alarma. Esta señal de alarma está representada por la función booleana mostrada con el uso de primitivas. En el mismo archivo se presenta un modelo donde se instancia el modulo de la alerta de batería 2 veces para hacerlo escalable, de esta manera se tienen 2 entradas de 4 bits que representan la carga de cada bateria y dos señales de descarga (que se encuentran en el mismo archivo). 
+### Sumador de 4 bits
 
+En este caso, en el mismo archivo del [sumador](./src/sumador.v) se define un módulo que tiene como entradas dos numeros de 4 bits que se desean sumar y un acarreo final. En el módulo se puede observar que se utilizó una metodología escalable puesto que se instancia cuatro veces el módulo sumador de 1 bit('adder') para crear la suma de 4 bits('adder4b'). 
+
+Es importante resaltar que el proceso se realizo bit a bit, en el archivo se muestra que se creo un modulo de suma de 1 bit para cada realizar la suma entre el n-esimo bit de A y B, pero para interconectar los módulos se utilizó un dato de tipo 'wire' como si fuera un acarreo temporal. De esta manera, este operador permitió conectar el acarreo de sálida $C_{out}$ del n-simo sumador de 1 bit al acarreo de entrada $C_{in}$ del siguiente sumador.    
 ### Alarmas mediante restador
 
 La segunda etapa del trabajo consiste en generar 3 alarmas para tres niveles de energía en las baterías (estos niveles se miden en función de la suma de ambas). 
@@ -71,13 +75,6 @@ $$I_3 = C_S\bar{C_R} + C_SC_R = C_S$$
 
 #### Aclaración
 Un punto importante en el anterior diseño es la suma con -4 y no con -3, esto se debe a que si se realiza la suma con -4, el *carry_out* dividirá los números en mayores a 3 y menores o iguales a 3. Por el contrario, si se escoge -3 se dividirán los números en mayores a 2 y menores e iguales que 2. 
-
-#### Sumador de 4 bits
-
-En este caso, en el mismo archivo del [sumador](./src/sumador.v) se define un módulo que tiene como entradas dos numeros de 4 bits que se desean sumar y un acarreo final. En el módulo se puede observar que se utilizó una metodología escalable puesto que se instancia cuatro veces el módulo sumador de 1 bit('adder') para crear la suma de 4 bits('adder4b'). 
-
-Es importante resaltar que el proceso se realizo bit a bit, en el archivo se muestra que se creo un modulo de suma de 1 bit para cada realizar la suma entre el n-esimo bit de A y B, pero para interconectar los módulos se utilizó un dato de tipo 'wire' como si fuera un acarreo temporal. De esta manera, este operador permitió conectar el acarreo de sálida $C_{out}$ del n-simo sumador de 1 bit al acarreo de entrada $C_{in}$ del siguiente sumador.    
-
 
 
 ### Diagramas
@@ -157,6 +154,7 @@ Por lo que se espera que en la primera prueba la alarma de las dos batería est�
 En las siguientes dos pruebas se espera que salte el nivel regular (4 - 15) y las demás salidas entén en 0.
 + Prueba 3: A = 2, B = 2; A+B = 4
 + Prueba 4: A = 8, B = 7; A+B = 15
+
 En las últimas dos pruebas se espera que la única salida en 1 sea el de nivel aceptable (16 - 30).
 + Prueba 5: A = 8, B = 8, A+B = 16
 + Prueba 5: A = 15, B = 15, A+B = 30
