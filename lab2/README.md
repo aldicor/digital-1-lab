@@ -53,9 +53,25 @@ Para hallar las expresiones booleanas de cada una de estas alarmas se usaron dos
  + Si se suman los números A+B con el módulo de suma antes explicado, el valor del *carry_out* de esa suma ($C_S$) será 1 si A+B $\geq$ 16. Por el contrario, si $C_S$ es 0, entonces A+B $\leq$ 15.
  + Si se suma el nivel total de las baterías encontrado con el módulo de suma en el paso anterior con -4, es decir, con el complemento a2 de 4, el resultaod del *carry_out* indicará que la suma de las baterías es mayor o menor que 3. Si el *carry_out* es igual a 1 ($C_R$), A+B $\geq$ 4, si por el contrario $C_R$ es igual a 0, A+B $\leq$ 3.
 
-<<<<<<< HEAD
- La anterior información se puede resumir enla siguiente tabla de verdad. Donde $C_S$ es el *carry_out* de la suma de la baterías (A+B), $C_R$ es la suma de esta carga total con el complemento a2 de 4 (A+B+(-4)), y, por último, $I_1$, $I_2$ e $I_3$ son las salidas de los niveles crítico, regular y aceptable, respectivamente.   
-=======
+ La anterior información se puede resumir enla siguiente tabla de verdad. 
+ Donde $C_S$ es el *carry_out* de la suma de la baterías (A+B), $C_R$ es la suma de esta carga total con el complemento a2 de 4 (A+B+(-4)), y, por último, $I_1$, $I_2$ e $I_3$ son las salidas de los niveles crítico, regular y aceptable, respectivamente.   
+
+ $C_S$ | $C_R$| $I_1$ | $I_2$| $I_3$|
+| ----| ---- | -----| -----| ----|
+|0| 0|1|0| 0|
+|0| 1|0|1| 0|
+|1| 0|0|0| 1|
+|1| 1|0|0| 1|
+
+Según la tabla anterior, las expresiones booleannas para cada alarma son:
+
+$$I_1 = \bar{C_S}\bar{C_R}$$
+$$I_2 = \bar{C_S}C_R$$
+$$I_3 = C_S\bar{C_R} + C_SC_R = C_S$$
+
+#### Aclaración
+Un punto importante en el anterior diseño es la suma con -4 y no con -3, esto se debe a que si se realiza la suma con -4, el *carry_out* dividirá los números en mayores a 3 y menores o iguales a 3. Por el contrario, si se escoge -3 se dividirán los números en mayores a 2 y menores e iguales que 2. 
+
 #### Sumador de 4 bits
 
 En este caso, en el mismo archivo del [sumador](./src/sumador.v) se define un módulo que tiene como entradas dos numeros de 4 bits que se desean sumar y un acarreo final. En el módulo se puede observar que se utilizó una metodología escalable puesto que se instancia cuatro veces el módulo sumador de 1 bit('adder') para crear la suma de 4 bits('adder4b'). 
@@ -90,25 +106,8 @@ En la visualizacion por ```RTL```, se observa la escalabilidad mencionada en la 
 ![](./imagenes_simulacion/diagrama_sum4bit.png)
 
 
-#### Comparador
 
->>>>>>> d057639092d20fdca09a933decedc4ed812f648e
 
-|$C_S$ | $C_R$| $I_1$ | $I_2$| $I_3$|
-| ----| ---- | -----| -----| ----|
-|0| 0|1|0| 0|
-|0| 1|0|1| 0|
-|1| 0|0|0| 1|
-|1| 1|0|0| 1|
-
-Según la tabla anterior, las expresiones booleannas para cada alarma son:
-
-$$I_1 = \bar{C_S}\bar{C_R}$$
-$$I_2 = \bar{C_S}C_R$$
-$$I_3 = C_S\bar{C_R} + C_SC_R = C_S$$
-
-#### Aclaración$
-Un punto importante en el anterior diseño es la suma con -4 y no con -3, esto se debe a que si se realiza la suma con -4, el *carry_out* dividirá los números en mayores a 3 y menores o iguales a 3. Por el contrario, si se escoge -3 se dividirán los números en mayores a 2 y menores e iguales que 2. 
 
 ## Simulaciones 
 
@@ -149,7 +148,23 @@ Los otros ejemplos en la simulación siguien el mismo principio.
 La razón por la que se optó implementar esta función en vez de arrojar una única salida de 5 bits, que sí representaría la suma en todos sus casos, fue por que el programa no busca conocer la suma necesariamene, solo generar alarmas para distintos valores de carga. Más adelante se ahondará al respecto.
 
 ### Simulación del bloque comparador
-A continuación se muestran valores
+A continuación se muestran 6 distintas entradas para A y B. Los valores que toman las batería en las dos primeras son:
++ Prueba 1: A = 0, B = 0, A+B = 0
++ Prueba 2: A = 1, B = 1, A+B = 2
+
+Por lo que se espera que en la primera prueba la alarma de las dos batería esté en 1 lógico, mientras que al mismo tiempo salte la alarma para el nivel crítico (0 - 3). 
+
+En las siguientes dos pruebas se espera que salte el nivel regular (4 - 15) y las demás salidas entén en 0.
++ Prueba 3: A = 2, B = 2; A+B = 4
++ Prueba 4: A = 8, B = 7; A+B = 15
+En las últimas dos pruebas se espera que la única salida en 1 sea el de nivel aceptable (16 - 30).
++ Prueba 5: A = 8, B = 8, A+B = 16
++ Prueba 5: A = 15, B = 15, A+B = 30
+
+La simulación de cada una de estas pruebas, seǵun el orden expuesto, se muestra a continuación. En donde *green* es el nivel aceptable, *yellow* regular y *critical* el nivel crítico.
+![Comparador](imagenes_simulacion/comparador.png)
+
+Como se puede observar en la imagen anterior, los resultados de la simulación concuerdan con los esperados.
 
 ## Implementación
 
