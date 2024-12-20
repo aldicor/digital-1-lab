@@ -18,7 +18,7 @@ Indice:
 
 ### Descripción
 
-#### Detector de alarmas de baterias 
+#### Detector de alarmas de descarga 
 
 Para cumplir con los requerimientos solicitados en la guía, se empezó con el problema más sencillo. En este caso, para implementar una señal de alerta en caso de un estado de descarga por cada bateria, se puede notar que al realizar un análisis de tabla de verdad, el único caso en el que el sistema va a activar su alarma es cuando los 4 bits esten en estado bajo. 
 
@@ -56,18 +56,34 @@ Es importante resaltar que el proceso se realizo bit a bit, en el archivo se mue
 
 
 
-
-
-
-
 ### Diagramas
+
+#### Detector de alarmas de descarga
+
+A partir de una visualazación por ```RTL```, se puede mostrar que este bloque tiene dos entradas (nivel de carga de cada bateria) y dos sálidas (descarga por cada alarma): 
+
+![[]](./imagenes_simulacion/diagrama_alerta_bloque.png)
+
+
+#### Sumador de 1 bit
+
+
+
+
+
+#### Sumador de 4 bits
+
+
+
+
+#### Comparador
+
+
+
+
 
 
 ## Simulaciones 
-
-<!-- (Incluir las de Digital si hicieron uso de esta herramienta, pero también deben incluir simulaciones realizadas usando un simulador HDL como por ejemplo Icarus Verilog + GTKwave) -->
-
-
 
 
 ### Simulación del bloque de alarma de descarga
@@ -85,12 +101,12 @@ A continuación se muestra la simulación para distintos valores de a, b y *carr
 ![Sumador sin carry](imagenes_simulacion/sumador_sin_carry.png)
 
 Tal y como se muestra en la imagen anterior, como la suma de los números no supera a 15 (que es lo máximo que se puede representar con 4 bits), el bus de datos *sum4* efectivamente representa la suma de los números, y el *carry_out* es 0.
-#### Suma con *carry_in*
+#### Suma con *carry_out*
 
 En el caso en el que la suma supero el valor de 15, sí hay *carry_out* y por tanto, el resultado de *sum4* no va a corresponder con la suma real de los números, puesto que la representación de la suma requeriría de 5 bits.
 
 A continuación se muestra una simulación que ejemplifica la explicación anterior.
-![Sumador con carry](/imagenes_simulacion/sumador_con_carry.png)
+![Sumador con carry](./imagenes_simulacion/sumador_con_carry.png)
 
 Como se puede observar en la anterior imagen, al sumar 8 + 8 se obtiene en la salida *sum4* el número 0, esto es debido a que 16, el resultado de la suma, en binario se escribe como 10000, por lo que al tomar los primeros 4 bits (que es el resultado que arroja *sum4*) el número representado es 0, en vez de 16. 
 Los otros ejemplos en la simulación siguien el mismo principio.
