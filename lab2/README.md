@@ -53,7 +53,46 @@ Para hallar las expresiones booleanas de cada una de estas alarmas se usaron dos
  + Si se suman los números A+B con el módulo de suma antes explicado, el valor del *carry_out* de esa suma ($C_S$) será 1 si A+B $\geq$ 16. Por el contrario, si $C_S$ es 0, entonces A+B $\leq$ 15.
  + Si se suma el nivel total de las baterías encontrado con el módulo de suma en el paso anterior con -4, es decir, con el complemento a2 de 4, el resultaod del *carry_out* indicará que la suma de las baterías es mayor o menor que 3. Si el *carry_out* es igual a 1 ($C_R$), A+B $\geq$ 4, si por el contrario $C_R$ es igual a 0, A+B $\leq$ 3.
 
+<<<<<<< HEAD
  La anterior información se puede resumir enla siguiente tabla de verdad. Donde $C_S$ es el *carry_out* de la suma de la baterías (A+B), $C_R$ es la suma de esta carga total con el complemento a2 de 4 (A+B+(-4)), y, por último, $I_1$, $I_2$ e $I_3$ son las salidas de los niveles crítico, regular y aceptable, respectivamente.   
+=======
+#### Sumador de 4 bits
+
+En este caso, en el mismo archivo del [sumador](./src/sumador.v) se define un módulo que tiene como entradas dos numeros de 4 bits que se desean sumar y un acarreo final. En el módulo se puede observar que se utilizó una metodología escalable puesto que se instancia cuatro veces el módulo sumador de 1 bit('adder') para crear la suma de 4 bits('adder4b'). 
+
+Es importante resaltar que el proceso se realizo bit a bit, en el archivo se muestra que se creo un modulo de suma de 1 bit para cada realizar la suma entre el n-esimo bit de A y B, pero para interconectar los módulos se utilizó un dato de tipo 'wire' como si fuera un acarreo temporal. De esta manera, este operador permitió conectar el acarreo de sálida $C_{out}$ del n-simo sumador de 1 bit al acarreo de entrada $C_{in}$ del siguiente sumador.    
+
+
+
+### Diagramas
+
+#### Detector de alarmas de descarga
+
+A partir de una visualazación por ```RTL```, se puede mostrar que este bloque tiene dos entradas (nivel de carga de cada bateria) y dos sálidas (descarga por cada alarma). Además, también se muestra la construcción modular por cada bateria: 
+
+![[]](./imagenes_simulacion/diagrama_alerta_bloque.png)
+
+En la siguiente imagen se observa que en el nivel de abstracción más bajo, la señal de cada batería se invierte y pasa bit por bit a una compuerta ```and```, tal como se planteo en la ecuacion.
+
+![alt text](./imagenes_simulacion/diagrama_alerta_fisica.png)
+
+#### Sumador de 1 bit
+
+Con el analisis ```RTL```, se observa el siguiente diagrama del sumador de 1 bit, este describe las ecuaciones mencionadas anteriormente. 
+
+![](./imagenes_simulacion/diagrama_sum1bit.png)
+
+
+#### Sumador de 4 bits
+
+En la visualizacion por ```RTL```, se observa la escalabilidad mencionada en la seccion de la descripcion. Se puede notar que se realiza un proceso bit a bit en el que se suma cada bit de 'A' y 'B', pero se conectan los modulos de sumadores de 1 bit de tal modo que el $c_{out}$ de un sumador es el $c_{in}$ del siguiente sumador de bit significativo.  
+
+![](./imagenes_simulacion/diagrama_sum4bit.png)
+
+
+#### Comparador
+
+>>>>>>> d057639092d20fdca09a933decedc4ed812f648e
 
 |$C_S$ | $C_R$| $I_1$ | $I_2$| $I_3$|
 | ----| ---- | -----| -----| ----|
@@ -113,6 +152,23 @@ La razón por la que se optó implementar esta función en vez de arrojar una ú
 A continuación se muestran valores
 
 ## Implementación
+
+Para reuninir todos los elementos creados, el último proceso de escalización fue crear un modulo [top](./src/nivelcarga.v) en el que se creó una instancia de cada modulo de alarma de descarga, suma de 4 bits y comparación. En este modulo, se describieron las dos entradas de 4 bits (carga en A y carga en B) junto con las salidas de alerta de 1 bit de descarga, nivel critico, regular y aceptable. Además, se implementó una señal de sálida adicional para activar un buzzer en dado caso que se tuviera un nivel critico de carga total. 
+
+Asimismo, se utilizaron datos de tipo ```wire```, para conectar el modulo de la suma con el del comparador y finalmente realizar la lógica de acarreos explicada anteriomente para activar las señales de nivel crítico, regular y aceptable.
+
+
+Por otro lado, considerando el hecho que la fpga utilizada maneja una lógica invertida y los switches que fueron utilizados para representar el nivel de carga de cada bateria estaban soldados al revés, se negaron las entradas y sálidas de datos en este mismo modulo para no cambiar o alterar la lógica de los modulos construidos anteriormente, ya que se podría haber cometido un error fácilmente que trajero consigo una implementación erronea.
+
+En el siguiente diagrama se resume la implementación de todo el sistema:
+![](./imagenes_simulacion/diagrama_completo.png)
+
+En el siguiente video se puede observar la implementación de todo el laboratorio: 
+
+
+
+
+
 
 ## Preguntas
 
