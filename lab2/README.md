@@ -40,7 +40,7 @@ En el caso de verilog, en el archivo de [descarga](descarga.v), se puede aprecia
 
 En este caso, en el mismo archivo del [sumador](./src/sumador.v) se define un módulo que tiene como entradas dos numeros de 4 bits que se desean sumar y un acarreo final. En el módulo se puede observar que se utilizó una metodología escalable puesto que se instancia cuatro veces el módulo sumador de 1 bit('adder') para crear la suma de 4 bits('adder4b'). 
 
-Es importante resaltar que el proceso se realizo bit a bit, en el archivo se muestra que se creo un modulo de suma de 1 bit para cada realizar la suma entre el n-esimo bit de A y B, pero para interconectar los módulos se utilizó un dato de tipo 'wire' como si fuera un acarreo temporal. De esta manera, este operador permitió conectar el acarreo de sálida $C_{out}$ del n-simo sumador de 1 bit al acarreo de entrada $C_{in}$ del siguiente sumador.    
+Es importante resaltar que el proceso se realizo bit a bit, en el archivo se muestra que se creó un módulo de suma de 1 bit para realizar cada suma entre el n-esimo bit de A y B, pero para interconectar los módulos se utilizó un dato de tipo 'wire' como si fuera un acarreo temporal. De esta manera, este operador permitió conectar el acarreo de sálida $C_{out}$ del n-simo sumador de 1 bit al acarreo de entrada $C_{in}$ del siguiente sumador.    
 ### Alarmas mediante restador
 
 La segunda etapa del trabajo consiste en generar 3 alarmas para tres niveles de energía en las baterías (estos niveles se miden en función de la suma de ambas). 
@@ -125,7 +125,7 @@ Como se puede evidenciar en la anterior imagen, la única combinación  de las 1
 
 ### Simulación del sumador de 1 y 4 bits
 
-Tal y como se mencionó anteriormente, para la implementación del sumador de 4 bits se creó primero un módulo de suma de 1 bit, con tres entradas de 1 bit (a, b, cin) y dos salidas de 1 bit (cout, sum). Mientras que para el módulo de suma de 4 bits resive dos buses de datos para cada número, cada uno de 4 bits.
+Tal y como se mencionó anteriormente, para la implementación del sumador de 4 bits se creó primero un módulo de suma de 1 bit, con tres entradas de 1 bit (a, b, cin) y dos salidas de 1 bit (cout, sum). Mientras que para el módulo de suma de 4 bits recibe dos buses de datos para cada número, cada uno de 4 bits.
 #### Suma sin *carry_out* 
 A continuación se muestra la simulación para distintos valores de a, b y *carry-in* para el sumador de 4 bits.
 ![Sumador sin carry](imagenes_simulacion/sumador_sin_carry.png)
@@ -133,7 +133,7 @@ A continuación se muestra la simulación para distintos valores de a, b y *carr
 Tal y como se muestra en la imagen anterior, como la suma de los números no supera a 15 (que es lo máximo que se puede representar con 4 bits), el bus de datos *sum4* efectivamente representa la suma de los números, y el *carry_out* es 0.
 #### Suma con *carry_in*
 
-En el caso en el que la suma supero el valor de 15, sí hay *carry_out* y por tanto, el resultado de *sum4* no va a corresponder con la suma real de los números, puesto que la representación de la suma requeriría de 5 bits.
+En el caso en el que la suma supere el valor de 15, sí hay *carry_out* y por tanto, el resultado de *sum4* no va a corresponder con la suma real de los números, puesto que la representación de la suma requeriría de 5 bits.
 
 A continuación se muestra una simulación que ejemplifica la explicación anterior.
 ![Sumador con carry](/imagenes_simulacion/sumador_con_carry.png)
@@ -171,7 +171,7 @@ Para reuninir todos los elementos creados, el último proceso de escalización f
 Asimismo, se utilizaron datos de tipo ```wire```, para conectar el modulo de la suma con el del comparador y finalmente realizar la lógica de acarreos explicada anteriomente para activar las señales de nivel crítico, regular y aceptable.
 
 
-Por otro lado, considerando el hecho que la fpga utilizada maneja una lógica invertida y los switches que fueron utilizados para representar el nivel de carga de cada bateria estaban soldados al revés, se negaron las entradas y sálidas de datos en este mismo modulo para no cambiar o alterar la lógica de los modulos construidos anteriormente, ya que se podría haber cometido un error fácilmente que trajero consigo una implementación erronea.
+Por otro lado, considerando el hecho que la fpga utilizada maneja una lógica invertida y los switches que fueron utilizados para representar el nivel de carga de cada bateria estaban soldados al revés, se negaron las entradas y salidas de datos en este mismo modulo para no cambiar o alterar la lógica de los modulos construidos anteriormente, ya que se podría haber cometido un error fácilmente que trajera consigo una implementación errónea.
 
 En el siguiente diagrama se resume la implementación de todo el sistema:
 ![](./imagenes_simulacion/diagrama_completo.png)
@@ -184,6 +184,21 @@ En el siguiente video se puede observar la implementación de todo el laboratori
 ## Preguntas
 
 1. ¿Qué desafíos pueden surgir al implementar en *hardware* un diseño que funcionaba correctamente en simulación?
+
+    Podemos encontrar diferentes desafíos al hacer la implementación en 
+    hardware, ya que es necesario conocer ciertas característica del
+    dispositivo, en este caso la FPGA, como por ejemplo: número de switches,
+    maneja y soldadura de las entradas y salidas ya que puede ser necesario
+    emplear una lógica negada para mantener concordancia, número de leds
+    disponibles, numeración de cada pin, y en algunos casos y proyectos
+    de otro tipo la frecuencia de operación.
+
+    Todos estos aspectos pueden limitar la implementación que querramos
+    realizar y debemos saber si es necesario usar módulos externos para
+    completar la visualización u operación necesaria del prototipo. Además
+    de todo esto, también ocurren los clásicos problemas de compatibildiad
+    entre los dispositivos al conectar a la pc a través del blaster y que 
+    debemos saber configurar todos los parámetros de manera correcta en Quartus.
 
 2. Describa el enfoque estructural y comportamental en el contexto de electrónica digital y cómo los implementó en el reto. ¿Qué hace Quartus con cada uno?
 
