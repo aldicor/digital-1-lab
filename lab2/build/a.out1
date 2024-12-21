@@ -1,12 +1,18 @@
-**** module/scope: bateria2
+**** module/scope: adder4b
      Flip-Flops   : 0
      Logic Gates  : 0
-**** module/scope: bateria2.bateria1
+**** module/scope: adder4b.bit1
      Flip-Flops   : 0
-     Logic Gates  : 7
-**** module/scope: bateria2.bateria2
+     Logic Gates  : 6
+**** module/scope: adder4b.bit2
      Flip-Flops   : 0
-     Logic Gates  : 7
+     Logic Gates  : 6
+**** module/scope: adder4b.bit3
+     Flip-Flops   : 0
+     Logic Gates  : 6
+**** module/scope: adder4b.bit4
+     Flip-Flops   : 0
+     Logic Gates  : 6
 **** TOTALS
      Flip-Flops   : 0
-     Logic Gates  : 14
+     Logic Gates  : 24
