@@ -178,9 +178,7 @@ En el siguiente diagrama se resume la implementación de todo el sistema:
 
 En el siguiente video se puede observar la implementación de todo el laboratorio: 
 
-
-
-
+![Video funcionamiento](imagenes_simulacion/Lab_2_Video_c.mp4
 
 
 ## Preguntas
