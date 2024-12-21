@@ -202,11 +202,57 @@ En el siguiente video se puede observar la implementación de todo el laboratori
 
 2. Describa el enfoque estructural y comportamental en el contexto de electrónica digital y cómo los implementó en el reto. ¿Qué hace Quartus con cada uno?
 
+    El enfoque estructural es uno de bajo nivel, donde se describe todo 
+    con mucho más detalle, ya que el funcionamiento es especificado a través
+    de compuertas y las conexiones entre ellas. Por ejemplo, AND, OR, registros,
+    sumadores. Es decir, es una descripción basada en componentes básicos.
+
+    En cambio, en el enfoque comportamental lo que se hace es una descripción
+    del "qué" y no del "cómo". Describimos el sistema en términos del comportamiento
+    que queremos que tenga o de su aspecto funcional. Se hace uso de pseudo-código
+    y expresiones lógicas; comparativamente es un nivel de abstracción más alto.
+
+    En el reto estos enfoques se implementaron de diferentes maneras:
+    el enfoque estructural nos permitió entender en el proceso de diseño
+    la realización de las funciones que necesitabamos al hacer los bocetos de
+    compuertas lógicas, mapas de karnaugh, pero esto se combinaba con el enfoque
+    comportamental al realizar escalabilidad con los diferentes bloques de 
+    funcionamiento que íbamos generando. Así mismo, el desarrollo de la
+    descripción de hardware lo hicimos fundamentalmente con el enfoque comportamental
+    y después en Quartus haciendo uso de la herramienta RTL logramos visualizar
+    en detalle los bloques, compuertas y conexiones que se generaban.
+
 3. ¿Cómo afecta el diseño del sumador y de comparadores al uso de recursos en la FPGA (LUTs, FFs, BRAMs, etc.)? Muestren el uso de recursos de su diseño.
+
 
 4. ¿Qué impacto tiene aumentar el número de bits de la lectura de cada batería? ¿Qué impacto tiene aumentar el número de baterias del banco? 
 
+    Aumentar el número de bits de lectura en cada batería implicaría que
+    tendríamos que implementar sumadores de mayor tamaño, así como redefinir
+    la lógica que empleamos para definir los valores en los que el nivel de 
+    carga total era crítico, regular o aceptable. Si por otro lado se
+    aumenta el número de baterias del banco se podría mantener la lógica empleada
+    pero aumentando el número de bloques tanto de alerta individual de cada 
+    batería como para los de suma total; donde sí cambiaría la lógica
+    empleada así como en el primer caso sería en la definición de los
+    valores para los diferentes niveles de batería.
+
 5. Describa las diferencias entre los tipos de dato ```wire``` y  ```reg``` en Verilog y compare ambos con el tipo de dato ```logic``` en System Verilog.
+
+    El tipo de dato wire, desde el punto de vista de diseño estructural,
+    representa una conexión física en el circuito, sin embargo, no
+    puede guardar datos por sí mismo sino que necesita conexión a una 
+    fuente conductora, su asignación es mediante ```assign```. Por otro lado
+    , el dato de tipo reg no necesita de una fuente conductora para
+    mantener un valor y representa un almacenamiento de datos. Su asignación
+    se hace dentro de bloques ```always``` o ```initial```.
+
+    En System Verilog se hace uso del tipo de dato logic que simplifica
+    el uso de wire y reg que de Verilog al unificarlos y combinar sus 
+    funcionalidades. Esto puede evitar confusiones y permitir hacer 
+    descripción de hardware de una manera más rápida y eficiente. Sin 
+    embargo se deben conocer casos especiales de System Verilog en los
+    que logic no reemplaza a wire.
 
 6. Únicamente con lo que se vio en clase, describa cómo se usó el bloque ```always```. Enfoque su respuesta hacia la implementación de lógica combinacional.
 
