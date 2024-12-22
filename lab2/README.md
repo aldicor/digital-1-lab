@@ -187,18 +187,20 @@ En el siguiente video se puede observar la implementación de todo el laboratori
 
     Podemos encontrar diferentes desafíos al hacer la implementación en 
     hardware, ya que es necesario conocer ciertas característica del
-    dispositivo, en este caso la FPGA, como por ejemplo: número de switches,
-    maneja y soldadura de las entradas y salidas ya que puede ser necesario
-    emplear una lógica negada para mantener concordancia, número de leds
-    disponibles, numeración de cada pin, y en algunos casos y proyectos
-    de otro tipo la frecuencia de operación.
+    dispositivo, en este caso la FPGA, como por ejemplo: el hecho de que los *switches* manejen una 
+    lógica negada, que implica negar las entradas para mantener una correcta implementación. De igual
+    manera, los *leds* disponibles manejan una lógica negada (se encienden con
+    un 0 lógico y se apagan con un 1 lógico), lo que implica también negar las 
+    salidas en el programa ya diseñado. De igual manera, es necesario tener 
+    presente la numeración de cada pin, y, en algunos casos y proyectos de otro 
+    tipo, la frecuencia de operación.
 
-    Todos estos aspectos pueden limitar la implementación que querramos
+    Todos estos aspectos pueden limitar la implementación que se quiera
     realizar y debemos saber si es necesario usar módulos externos para
     completar la visualización u operación necesaria del prototipo. Además
     de todo esto, también ocurren los clásicos problemas de compatibildiad
-    entre los dispositivos al conectar a la pc a través del blaster y que 
-    debemos saber configurar todos los parámetros de manera correcta en Quartus.
+    entre los dispositivos al conectar a la pc a través del *blaster*. Por último,
+    es necesario saber configurar todos los parámetros de manera correcta en Quartus.
 
 2. Describa el enfoque estructural y comportamental en el contexto de electrónica digital y cómo los implementó en el reto. ¿Qué hace Quartus con cada uno?
 
@@ -213,13 +215,14 @@ En el siguiente video se puede observar la implementación de todo el laboratori
     y expresiones lógicas; comparativamente es un nivel de abstracción más alto.
 
     En el reto estos enfoques se implementaron de diferentes maneras:
-    el enfoque estructural nos permitió entender en el proceso de diseño
-    la realización de las funciones que necesitabamos al hacer los bocetos de
-    compuertas lógicas, mapas de karnaugh, pero esto se combinaba con el enfoque
+    el enfoque estructural permitió entender en el proceso de diseño
+    la realización de las funciones lógicas que se 
+    necesitaban, pero esto se combinaba con el enfoque
     comportamental al realizar escalabilidad con los diferentes bloques de 
-    funcionamiento que íbamos generando. Así mismo, el desarrollo de la
-    descripción de hardware lo hicimos fundamentalmente con el enfoque comportamental
-    y después en Quartus haciendo uso de la herramienta RTL logramos visualizar
+    funcionamiento que se iban diseñando. Sin embargo,  es importante mencionar 
+    que el desarrollo de la
+    descripción de *hardware* se hizo fundamentalmente con el enfoque comportamental
+    y después en Quartus, haciendo uso de la herramienta RTL, se logró visualizar
     en detalle los bloques, compuertas y conexiones que se generaban.
 
 3. ¿Cómo afecta el diseño del sumador y de comparadores al uso de recursos en la FPGA (LUTs, FFs, BRAMs, etc.)? Muestren el uso de recursos de su diseño.
@@ -228,20 +231,22 @@ En el siguiente video se puede observar la implementación de todo el laboratori
 4. ¿Qué impacto tiene aumentar el número de bits de la lectura de cada batería? ¿Qué impacto tiene aumentar el número de baterias del banco? 
 
     Aumentar el número de bits de lectura en cada batería implicaría que
-    tendríamos que implementar sumadores de mayor tamaño, así como redefinir
-    la lógica que empleamos para definir los valores en los que el nivel de 
+    se tendría que implementar un módulo de suma con más pines de entrada, así como redefinir
+    la lógica que se empleó para definir los valores en los que el nivel de 
     carga total era crítico, regular o aceptable. Si por otro lado se
     aumenta el número de baterias del banco se podría mantener la lógica empleada
     pero aumentando el número de bloques tanto de alerta individual de cada 
     batería como para los de suma total; donde sí cambiaría la lógica
-    empleada así como en el primer caso sería en la definición de los
+    empleada, así como en el primer caso, sería en la definición de los
     valores para los diferentes niveles de batería.
 
+    Adicionalmente, en ambos casos el uso de recursos empleado en el *hardware* aumnentaría en 
+    comparación al diseño con solo dos baterioas y 4 bits de lectura.
 5. Describa las diferencias entre los tipos de dato ```wire``` y  ```reg``` en Verilog y compare ambos con el tipo de dato ```logic``` en System Verilog.
 
     El tipo de dato wire, desde el punto de vista de diseño estructural,
-    representa una conexión física en el circuito, sin embargo, no
-    puede guardar datos por sí mismo sino que necesita conexión a una 
+    representa una conexión física en el circuito. Sin embargo, no
+    puede guardar datos por sí mismo, sino que necesita conexión a una 
     fuente conductora, su asignación es mediante ```assign```. Por otro lado
     , el dato de tipo reg no necesita de una fuente conductora para
     mantener un valor y representa un almacenamiento de datos. Su asignación
@@ -251,17 +256,21 @@ En el siguiente video se puede observar la implementación de todo el laboratori
     el uso de wire y reg que de Verilog al unificarlos y combinar sus 
     funcionalidades. Esto puede evitar confusiones y permitir hacer 
     descripción de hardware de una manera más rápida y eficiente. Sin 
-    embargo se deben conocer casos especiales de System Verilog en los
+    embargo, se deben conocer casos especiales de System Verilog en los
     que logic no reemplaza a wire.
 
 6. Únicamente con lo que se vio en clase, describa cómo se usó el bloque ```always```. Enfoque su respuesta hacia la implementación de lógica combinacional.
 
+   En lógica combinacional, el bloque always en Verilog evalúa y genera salidas en función de las entradas inmediatamente después de que alguna de ellas cambie. Se utiliza el formato always @(*), que asegura que el bloque se active automáticamente con cualquier cambio en las señales de entrada.
 
 
 
 ## Conclusiones
-
+   + Para el correcto funcionamiento del diseño implementado es importante conocer
+   parámetros de funcionamiento en los pines de la FPGA. Por ejemplo, la lógica negada con la que funcionan los *leds* y *switches*, que obligan a negar las entradas y salidas.
+   + Al realizar el proyecto con cierto nivel de complejidad normalmente es necesario realizar un diseño que combine el enfoque estructural
+   como comportamental. Esto se vio implementado en la presente práctica, por ejemplo, al anidar distintos módulos en otros.
 
 ## Referencias
-
+R. L. Tocci, N. S. Widmer, and G. L. Moss, *Digital Systems: Principles and Applications*, 11th ed. Pearson, 2016.
 
