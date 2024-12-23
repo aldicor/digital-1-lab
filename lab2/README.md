@@ -55,10 +55,10 @@ Para hallar las expresiones booleanas de cada una de estas alarmas se usaron dos
 #### Razonamiento utilizado
 
  + Si se suman los números A+B con el módulo de suma antes explicado, el valor del *carry_out* de esa suma ($C_S$) será 1 si A+B $\geq$ 16. Por el contrario, si $C_S$ es 0, entonces A+B $\leq$ 15.
- + Si se suma el nivel total de las baterías encontrado con el módulo de suma en el paso anterior con -4, es decir, con el complemento a2 de 4, el resultaod del *carry_out* indicará que la suma de las baterías es mayor o menor que 3. Si el *carry_out* es igual a 1 ($C_R$), A+B $\geq$ 4, si por el contrario $C_R$ es igual a 0, A+B $\leq$ 3.
+ + Si se suma el nivel total de las baterías encontrado con el módulo de suma en el paso anterior con -4, es decir, con el complemento a2 de 4, el resultado del *carry_out* indicará que la suma de las baterías es mayor o menor que 3. Si el *carry_out* es igual a 1 ($C_R$), A+B $\geq$ 4, si por el contrario $C_R$ es igual a 0, A+B $\leq$ 3.
 
  La anterior información se puede resumir enla siguiente tabla de verdad. 
- Donde $C_S$ es el *carry_out* de la suma de la baterías (A+B), $C_R$ es la suma de esta carga total con el complemento a2 de 4 (A+B+(-4)), y, por último, $I_1$, $I_2$ e $I_3$ son las salidas de los niveles crítico, regular y aceptable, respectivamente.   
+ Donde $C_S$ es el *carry_out* de la suma de la baterías (A+B), $C_R$ es el acarreo de sálida de la suma de esta carga total con el complemento a2 de 4 (A+B+(-4)), y, por último, $I_1$, $I_2$ e $I_3$ son las salidas de los niveles crítico, regular y aceptable, respectivamente.   
 
  $C_S$ | $C_R$| $I_1$ | $I_2$| $I_3$|
 | ----| ---- | -----| -----| ----|
@@ -188,7 +188,7 @@ En el siguiente video se puede observar la implementación de todo el laboratori
     Podemos encontrar diferentes desafíos al hacer la implementación en 
     hardware, ya que es necesario conocer ciertas característica del
     dispositivo, en este caso la FPGA, como por ejemplo: el hecho de que los *switches* manejen una 
-    lógica negada, que implica negar las entradas para mantener una correcta implementación. De igual
+    lógica negada (están soldados al revés), que implica negar las entradas para mantener una correcta implementación. De igual
     manera, los *leds* disponibles manejan una lógica negada (se encienden con
     un 0 lógico y se apagan con un 1 lógico), lo que implica también negar las 
     salidas en el programa ya diseñado. De igual manera, es necesario tener 
@@ -207,70 +207,64 @@ En el siguiente video se puede observar la implementación de todo el laboratori
     El enfoque estructural es uno de bajo nivel, donde se describe todo 
     con mucho más detalle, ya que el funcionamiento es especificado a través
     de compuertas y las conexiones entre ellas. Por ejemplo, AND, OR, registros,
-    sumadores. Es decir, es una descripción basada en componentes básicos.
+    sumadores. Es decir, es una descripción basada en componentes básicos. En este enfoque se parte del análisis del problema desde una tabla de verdad, luego se establecen las ecuaciones booleanas con mapas de Karnaugh y se simplifican con los axiomas del algebra booleana. Finalmente, con las ecuaciones se determinan las compuertas ó primitivas básicas que realizan la función deseada junto con su conexión.
 
     En cambio, en el enfoque comportamental lo que se hace es una descripción
-    del "qué" y no del "cómo". Describimos el sistema en términos del comportamiento
-    que queremos que tenga o de su aspecto funcional. Se hace uso de pseudo-código
-    y expresiones lógicas; comparativamente es un nivel de abstracción más alto.
+    del "qué" y no del "cómo". Se describe el sistema en términos del comportamiento
+    deseado o de su aspecto funcional. Se hace uso de pseudo-código
+    y expresiones lógicas; comparativamente es un nivel de abstracción más alto. En este nivel de abstracción se mira a la solución como una caja negra porque no se conoce a ciencia cierta la descripción de hardware que realiza la función deseada.
 
     En el reto estos enfoques se implementaron de diferentes maneras:
     el enfoque estructural permitió entender en el proceso de diseño
     la realización de las funciones lógicas que se 
     necesitaban, pero esto se combinaba con el enfoque
     comportamental al realizar escalabilidad con los diferentes bloques de 
-    funcionamiento que se iban diseñando. Sin embargo,  es importante mencionar 
+    funcionamiento que se fueron diseñando. Sin embargo, es importante mencionar 
     que el desarrollo de la
-    descripción de *hardware* se hizo fundamentalmente con el enfoque comportamental
-    y después en Quartus, haciendo uso de la herramienta RTL, se logró visualizar
-    en detalle los bloques, compuertas y conexiones que se generaban.
+    descripción de *hardware* se hizo fundamentalmente con el enfoque estructural al plantear las tablas de verdad de cada problema y describir las salidas con el uso de primitivas. Es por esto que en Quartus, haciendo uso de la herramienta RTL, se logró visualizar
+    en detalle los bloques, compuertas y conexiones que se generaban al hacer uso del concepto de instanciación.
 
 3. ¿Cómo afecta el diseño del sumador y de comparadores al uso de recursos en la FPGA (LUTs, FFs, BRAMs, etc.)? Muestren el uso de recursos de su diseño.
 
 
 4. ¿Qué impacto tiene aumentar el número de bits de la lectura de cada batería? ¿Qué impacto tiene aumentar el número de baterias del banco? 
 
-    Aumentar el número de bits de lectura en cada batería implicaría que
-    se tendría que implementar un módulo de suma con más pines de entrada, así como redefinir
+    Aumentar el número de bits de lectura en cada batería implicaría implementar un módulo de suma con más pines de entrada, así como redefinir
     la lógica que se empleó para definir los valores en los que el nivel de 
-    carga total era crítico, regular o aceptable. Si por otro lado se
-    aumenta el número de baterias del banco se podría mantener la lógica empleada
+    carga total era crítico, regular o aceptable. En este caso, para lograr este objetivo simplemente se debe agregar un modulo de sumador de 1 bit al modulo de 4 bits conectando el $C_o$ del sumador de 4 bits al $C_{in}$ del sumador de 1 bit y las entradas de este nuevo modulo serían los bits más significativos de $A$ y $B$. En cuanto al nivel crítico, el 10% se establece con: 
+    $$L_c = (2^5-1)*2*0.1 \approx 6 $$
+
+    Entonces en el modulo de comparación se utiliza el complemento a 2´s de 7 para separar la suma del banco menor o igual a 6 como nivel critico por el acarreo en estado bajo del restador. Este restador se crearía utilizando el sumador de 5 bits mencionado anteriormente, tendría como entradas la suma total del banco y el complemento a 2´s de 7. En cuanto al nivel aceptable, este puede seguir siendo considerado como el acarreo de salida del sumador de 5 bits, ya que este se activaría cuando la suma del banco esté por encima del 50%, es decir $Sum > 31$. Finalmente, el nivel intermedio puede establecerse con la misma lógica de acarreos establecida en el diseño de 4 bits.
+
+    Por otro lado, si se aumenta el número de baterias del banco se podría mantener la lógica empleada
     pero aumentando el número de bloques tanto de alerta individual de cada 
     batería como para los de suma total; donde sí cambiaría la lógica
     empleada, así como en el primer caso, sería en la definición de los
-    valores para los diferentes niveles de batería.
+    valores para los diferentes niveles de batería. Por otro lado, dependiendo del nuevo número de baterias, se puede llegar a hacer necesario aumentar el número de bits de los sumadores que reciban la suma anterior. Es decir que en el caso de agregar una tercera batería, se podría mantener el primer sumador de 4 bits ($A+B$), pero el siguiente sumador que realice la operación $(A+B)+C$ tendría que ser de 5 bits para poder considerar el acarreo de salida del sumador de 4 bits, ya que este acarreo representa el bit más significativo de la suma de ($A+B$). En el caso de establecer un nivel aceptable de batería, se puede llegar a recurrir al uso de un restador para conocer si la suma supera el 50%. Lo anterior sería necesario ya que la lógica del acarreo de la suma total no indicaría una carga superior al 50%, esta indicaría: 
 
-    Adicionalmente, en ambos casos el uso de recursos empleado en el *hardware* aumnentaría en 
-    comparación al diseño con solo dos baterioas y 4 bits de lectura.
+    $$\% >= \frac{2^5}{maxima\_ carga} >= \frac{32}{45} = 71.11\%$$
+
+    Adicionalmente, en ambos casos el uso de recursos empleado en el *hardware* aumentaría en 
+    comparación al diseño con solo dos baterias y 4 bits de lectura.
+
 5. Describa las diferencias entre los tipos de dato ```wire``` y  ```reg``` en Verilog y compare ambos con el tipo de dato ```logic``` en System Verilog.
 
-    El tipo de dato wire, desde el punto de vista de diseño estructural,
-    representa una conexión física en el circuito. Sin embargo, no
-    puede guardar datos por sí mismo, sino que necesita conexión a una 
-    fuente conductora, su asignación es mediante ```assign```. Por otro lado
-    , el dato de tipo reg no necesita de una fuente conductora para
-    mantener un valor y representa un almacenamiento de datos. Su asignación
-    se hace dentro de bloques ```always``` o ```initial```.
+    El tipo de dato wire, desde el punto de vista de diseño estructural, representa una conexión física en el circuito. Sin embargo, no puede guardar datos por sí mismo, sino que necesita conexión a una fuente conductora, su asignación es mediante ```assign```. En este laboratorio se puede evidenciar que este tipo de dato fue utilizado para conectar instancias de modulos; por ejemplo, este fue utilizado para conectar los sumadores de 1 bit para crear el sumador de 4 bits. Por otro lado, el dato de tipo reg no necesita de una fuente conductora para mantener un valor y representa un almacenamiento de datos. Su asignación
+    se hace dentro de bloques ```always``` o ```initial```. 
 
-    En System Verilog se hace uso del tipo de dato logic que simplifica
-    el uso de wire y reg que de Verilog al unificarlos y combinar sus 
-    funcionalidades. Esto puede evitar confusiones y permitir hacer 
-    descripción de hardware de una manera más rápida y eficiente. Sin 
-    embargo, se deben conocer casos especiales de System Verilog en los
-    que logic no reemplaza a wire.
+    En System Verilog se hace uso del tipo de dato logic que simplifica el uso de wire y reg que de Verilog al unificarlos y combinar sus funcionalidades. Esto puede evitar confusiones y permitir hacer descripción de hardware de una manera más rápida y eficiente. Sin embargo, se deben conocer casos especiales de System Verilog en los que logic no reemplaza a wire.
 
 6. Únicamente con lo que se vio en clase, describa cómo se usó el bloque ```always```. Enfoque su respuesta hacia la implementación de lógica combinacional.
 
-   En lógica combinacional, el bloque always en Verilog evalúa y genera salidas en función de las entradas inmediatamente después de que alguna de ellas cambie. Se utiliza el formato always @(*), que asegura que el bloque se active automáticamente con cualquier cambio en las señales de entrada.
-
+   En lógica combinacional, el bloque always en Verilog evalúa y genera salidas en función de las entradas inmediatamente después de que alguna de ellas cambie. Se utiliza el formato always @(*), que asegura que el bloque se active automáticamente con cualquier cambio en las señales de entrada. De acuerdo a la explicación vista en clase, este bloque es utilizado como un ```switch case```, este tipo de bloques representa una descripción de hardware comportamental, ya que sólo se definen los casos deseados junto con su respetiva sálida deseada, pero se desconoce a nivel estructural las primitivas que cumplen esta función.
 
 
 ## Conclusiones
    + Para el correcto funcionamiento del diseño implementado es importante conocer
    parámetros de funcionamiento en los pines de la FPGA. Por ejemplo, la lógica negada con la que funcionan los *leds* y *switches*, que obligan a negar las entradas y salidas.
-   + Al realizar el proyecto con cierto nivel de complejidad normalmente es necesario realizar un diseño que combine el enfoque estructural
+   + Al realizar un proyecto con cierto nivel de complejidad normalmente es necesario realizar un diseño que combine el enfoque estructural
    como comportamental. Esto se vio implementado en la presente práctica, por ejemplo, al anidar distintos módulos en otros.
-
+   + El uso del concepto de instanciación resulta ser una herramienta muy potente de la electrónica digital. Con este concepto se puede notar que a partir de resolver un problema pequeño o la minimización de un problema grande, esta acción se puede escalar o repetir n veces hasta crear una solución compleja. Lo anterior se vio evidenciado en la instanciación del sumador de 1 bit para crear un sumador de 4 bits, y al mismo tiempo utilizar este sumador de 4 bits como punto de partida para comparar la suma de la baterias con un nivel de carga critica establecida.   
 ## Referencias
 R. L. Tocci, N. S. Widmer, and G. L. Moss, *Digital Systems: Principles and Applications*, 11th ed. Pearson, 2016.
 
