@@ -226,6 +226,11 @@ En el siguiente video se puede observar la implementación de todo el laboratori
 
 3. ¿Cómo afecta el diseño del sumador y de comparadores al uso de recursos en la FPGA (LUTs, FFs, BRAMs, etc.)? Muestren el uso de recursos de su diseño.
 
+Considerando el hecho que en este laboratorio sólo se utilizó lógica combinacional, no existe un consumo de recursos de flip flops ni de BRAMs. Por otro lado, dependiendo del diseño, se pudieron haber utilizado más LUTs en el proceso de comparación, pero el equipo decidió aprovechar al máximo las señales arrojadas por los sumadores, como es el caso de $c_{out}$ de la suma del banco que indicaba $carga > 50%$. Asimismo, el sumador de 4 bits pudo haber sido contruido con un primer half adder en vez de un full de adder 1 bit ya que este no necesitaba acarreo de entrada. \
+En la siguiente imagen se puede comprobar el uso único de lógica combinacional puesto que no hay consumo de FFs ('Dedicated logic registers: 0/10320') ni BRAMs ('Total memory bits: 0/423936'). Además, se demuestra un bajo uso de LUTs ('Total combinational functions = 9/10320'). De la misma manera, los 14 pines utilizados corresponden a las 8 switches que representan las dos baterías de 4 bits, 2 leds de alarma de descarga, 1 led para nivel de carga (aceptable, regular y critico) y 1 un buzzer:
+
+![](./imagenes_simulacion/resourcesusage.png)
+
 
 4. ¿Qué impacto tiene aumentar el número de bits de la lectura de cada batería? ¿Qué impacto tiene aumentar el número de baterias del banco? 
 
