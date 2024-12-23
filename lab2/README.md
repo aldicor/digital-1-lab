@@ -102,10 +102,20 @@ En la visualizacion por ```RTL```, se observa la escalabilidad mencionada en la 
 
 ![](./imagenes_simulacion/diagrama_sum4bit.png)
 
+#### Restador
 
+Como se mencionó anteriormente, uno de las variables que determina el nivel lógico de las salidas que indican el nivel de batería es el *carry-out* de la suma de la carga total de las dos baterías (A+B) con el complemento a2 del número 4. 
 
+A continuación se muestra el bloque correspondiente a este sumador (que se identificó con el nombre de "restador", puesto que realmente la suma que genera representa la resta de dichos números).
+![](./imagenes_simulacion/restador.png)
 
+Como se puede ver en la anterior imagen, una de las entradas del restador corrresponde primera salida del bloque anterior sumaAB, mientras que la otra entrada corresponde al complemento a2 de 4. Este complemento se incluye dentro del código como una constante.  
 
+De igual manera, para visualizar de un mejor manera la estructura general del restador, a continuación se muestra su conexión en la estructura genral del programa.
+
+![](./imagenes_simulacion/restador_general.png) 
+
+Tal y como se observa en la anterior imagen, la salida del bloque de suma es la entrada del restador. Asimismo, las variables que determinan el nivel lógico de las salidas (green, yellow y critical) corresponden a los *carry-out* del restador y sumador.
 ## Simulaciones 
 
 <!-- (Incluir las de Digital si hicieron uso de esta herramienta, pero también deben incluir simulaciones realizadas usando un simulador HDL como por ejemplo Icarus Verilog + GTKwave) -->
