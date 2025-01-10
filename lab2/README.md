@@ -2,6 +2,11 @@
 
 # Integrantes
 
+[Alejandro Diaz Cordoba](https://github.com/aldicor) \
+[Juan David Bernal Sanchez](https://github.com/jbernalsa) \
+[Juan David Sanchez Quintero](https://github.com/jdavid-sz)
+
+
 
 # Informe
 
