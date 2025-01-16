@@ -3,33 +3,14 @@ module bin2BCD(sum, sel, bcd);
     input  [1:0] sel;
     output reg [3:0] bcd;
 
-    reg [15:0] bcd_t;
     integer i;
 
-    always @(sum) begin
-        bcd_t <= 0;
-        for (i = 0;i<9;i=i+1) begin
-            if (bcd_t[3:0] > 4) begin
-                bcd_t[3:0] <= bcd_t[3:0] + 3;
-            end
-            if (bcd_t[7:4] > 4) begin
-                bcd_t[7:4] <= bcd_t[7:4] + 3;
-            end
-            if (bcd_t[11:8] > 4) begin
-                bcd_t[11:8] <= bcd_t[11:8] + 3;
-            end
-            if (bcd_t[15:12] > 4) begin
-                bcd_t[15:12] <= bcd_t[15:12] + 3;
-            end
-            bcd_t <= {bcd_t[14:0], sum[8-i]};
-        end
-
+    always @(sel) begin
         case (sel)
-            2'b00: bcd = bcd_t[15:12]; 
-            2'b01: bcd = bcd_t[11:8];
-            2'b10: bcd = bcd_t[7:4];
-            2'b11: bcd = bcd_t[3:0];  
-            default: bcd = bcd_t[3:0];
+            2'b00: bcd = sum %1000; 
+            2'b01: bcd = sum%100-sum %1000*10;
+            2'b10: bcd = sum%10-sum %100*10;
+            2'b11: bcd = sum-sum %10*10;  
         endcase
     end
 
