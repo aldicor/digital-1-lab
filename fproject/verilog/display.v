@@ -1,53 +1,53 @@
-module display(clock, ns_count, sn_count, ew_count, we_count ,rs, rw, en, D );
+module display(clock, ns_count, sn_count, ew_count, we_count,en, rs, rw, D);
     input [15:0] ns_count, sn_count, ew_count, we_count;
-    input clock; //clock 10us
-    output reg rs, rw, en; 
+    input clock; //clock 16ms
+    output en;
+    output reg rs, rw; 
     output reg [7:0] D;
 
+    assign en = clock;
     //
-    localparam init_co = 2'b00;
-    localparam update_reg = 2'b01; //
-    localparam send_D = 2'b10;
+
+    localparam init_co    = 3'b000;
+    localparam update_reg = 3'b001; //
+    localparam send_D1    = 3'b010;
+    localparam secondline = 3'b011;
+    localparam send_D2    = 3'b100;
+    localparam firstline  = 3'b101;
 
 
     reg [7:0] message [31:0]; //32 direcciones de 8bits
-
-    initial begin
-        
-    end
-
-    reg [10:0] counter; //contador para cambiar de estado
+    reg [2:0] init_counter; //contador de inicializacion
     reg [1:0] state;
     reg [5:0] char_index;
 
     initial begin
-        counter <= 0;
+        init_counter <= 0;
         state <= 0;
         rs <= 0;
         rw <= 0;
-        en <= 0;
+        char_index <=0;
     end
 
 
     always @(posedge clock) begin
-        counter <= counter +1;
         case (state)
             init_co:begin
-                rw <=0; // solo se escriben datos
-                rs <=0;
-                en <=0;
-                if (counter == 4) begin
-                    D <= 8'b00111000; // 8bits - N 2 - F 5x8
-                end else if (counter == 8) begin
-                    D <= 8'b00001100; // display on - cursor off - cursor p off
-                end else if (counter == 12) begin
-                    D <= 8'b00000001; // clear display
-                end else if (counter == 1532) begin
-                    D <= 8'b00000110; // right -no shift 
-                end else if (counter == 1570) begin
-                    counter <=0;
-                    state   <= update_reg;
-                end
+                init_counter <= init_counter +1;
+                rw <= 0; // solo se escriben datos
+                rs <= 0;
+                case (init_counter)
+                    2: D <= 8'd0; // wait time
+                    3: D <= 8'b00111100; // 8bits - N 2 - F 5x8
+                    4: D <= 8'b00001110; //dis on - curso off - blink -off
+                    5: D <= 8'b00000001; // clear display
+                    6: D <= 8'b00000110; // increment    -no shift 
+                    7: begin
+                        init_counter <= 0;
+                        state <= update_reg;
+                    end
+                    default: D <= 8'd0;
+                endcase
             end
             update_reg:begin
                 message[0] = "N";//verilog maneja codigo ascii
@@ -86,28 +86,38 @@ module display(clock, ns_count, sn_count, ew_count, we_count ,rs, rw, en, D );
                 message[30] = we_count[3:0]+8'd48;
                 message[31] = " ";
                 char_index <=0;
-                counter<=0;
+                state <= send_D1;
             end
-            send_D:begin
-                en <= 1;
+            send_D1:begin
+                rs <= 1;
+                char_index <= char_index + 1;
+                D <= message[char_index];                    
+                if (char_index ==15) begin
+                    state <= secondline;
+                end
+            end
+            secondline:begin
+                rs <= 0;
+                D <= 8'b11000000;
+                state <= send_D2;
+            end
+            
+            send_D2:begin
                 rs <= 1;
                 D <= message[char_index];
-                if (counter == 5) begin //50us de espera
-                    char_index <= char_index + 1;
-                    counter<=0;
-                    if (char_index ==32) begin
-                        state <= init_co;
+                char_index <= char_index + 1;                    
+                if (char_index ==32) begin
+                    state <= firstline;
                 end
-                end 
-
-            end 
+            end
+            firstline:begin
+                rs <=0;
+                D <= 8'b10000000; //address 00 DDRAM
+                state <= update_reg;
+            end
             default: state = init_co;
         endcase
     end
-
-
-
-
 
 
 endmodule

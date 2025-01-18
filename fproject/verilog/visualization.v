@@ -10,9 +10,9 @@ module visualization(
     output enable, rs, rw;
     output [7:0] D;
     
-    wire clock1us;
+    wire clock1ms;
 
-    clockdiv #(.n(500000)) clk10us_ins (.clkin(clock), .clkout(clock1us));
+    clockdiv #(.n(1)) clk1ms_ins (.clkin(clock), .clkout(clock1ms));
 
     wire [13:0] count_ns, count_sn, count_ew, count_we;
 
@@ -28,7 +28,7 @@ module visualization(
     bin2BCD ew_bcd_ins(.num(count_ew), .bcd(bcd_ew));
     bin2BCD we_bcd_ins(.num(count_we), .bcd(bcd_we));
 
-    display dis16x2(.clock(clock1us),
+    display dis16x2(.clock(clock1ms),
         .ns_count(bcd_ns), .sn_count(bcd_sn), .ew_count(bcd_ew), .we_count(bcd_we),
         .rs(rs), .rw(rw), .en(enable), .D(D));
     

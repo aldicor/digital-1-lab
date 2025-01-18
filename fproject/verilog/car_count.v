@@ -7,7 +7,7 @@ module car_count(detector, count);
     end    
 
 
-    always @(detector posedge) begin
+    always @(posedge detector) begin
         count <= count +1;
         if (count == 10000) begin
             count <= 0;
