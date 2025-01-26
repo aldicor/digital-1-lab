@@ -2,7 +2,7 @@ module clockdiv #(parameter n = 50000000) (clkin, clkout);
     input   clkin;
     output reg clkout;
 
-    reg [25:0] count = 0;
+    reg [26:0] count = 0;
 
     initial begin
         clkout = 0;
