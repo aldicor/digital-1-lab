@@ -114,10 +114,10 @@ module principal(clk,up,down,signal);
         speed = 3'b0;
     end    
 
-    always @(posedge up)begin
+    always @(posedge down)begin
         speed <= speed + 1;
     end    
-    always @(posedge down)begin
+    always @(posedge up)begin
         speed <= speed -1;
     end    
     control uut(
