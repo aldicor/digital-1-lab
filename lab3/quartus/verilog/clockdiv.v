@@ -1,4 +1,4 @@
-module clockdiv #(parameter div = 16'd400000)(clin, clout);
+module clockdiv #(parameter div = 16'd806452)(clin, clout);
     input clin;
     output reg clout;
 

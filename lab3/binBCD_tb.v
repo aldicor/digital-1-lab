@@ -11,23 +11,23 @@ module binBCD_tb();
         .sel(sel_tb)
     );
     initial begin
-        sum_tb = 9'd584;
+        sum_tb = 9'd471;
         sel_tb = 2'd0;
         #1;
-        sum_tb = 9'd584;
+        sum_tb = 9'd471;
         sel_tb = 2'd1;
         #1;
-        sum_tb = 9'd584;
+        sum_tb = 9'd471;
         sel_tb = 2'd2;
         #1;
-        sum_tb = 9'd584;
+        sum_tb = 9'd471;
         sel_tb = 2'd3;
         #1;
     end
     initial begin: TEST_CASE
         $dumpfile("binBCD_tb.vcd");
         $dumpvars(-1,uut);
-        #4 $finish;
+        #5 $finish;
     end
 
 endmodule

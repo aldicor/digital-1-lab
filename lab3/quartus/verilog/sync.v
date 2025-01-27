@@ -1,9 +1,3 @@
-`include "binBCD.v"
-`include "BCD7s.v"
-`include "selector.v"
-`include "clockdiv.v"
-
-
 module sync(sel_t,baterias, clock, ssg, nseg,light);
     input [15:0] baterias;
     input sel_t;
