@@ -12,9 +12,7 @@ module clockdiv #(parameter n = 50000000) (clkin, clkout);
         count <= count +1;
         if (count == n-1) begin
             count <=0;
-            clkout = ~clkout;
         end
+        clkout <= (count-1<n/2)?1'b1:1'b0;
     end
-
-
 endmodule
