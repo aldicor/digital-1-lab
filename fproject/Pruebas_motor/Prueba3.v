@@ -1,7 +1,7 @@
 //El objetivo de esta prueba es determinar qué hace el servomotor con una señal de 2ms
 `include "Pruebas_motor/pulso.v"
 
-module speed(clk,diodo);
+module Prueba3(clk,diodo);
     input clk;
     output reg diodo;
     wire diodo_wire;

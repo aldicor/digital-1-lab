@@ -1,7 +1,7 @@
 // EL objetivo de esta prueba es determinar el parámetro de división para un reloj de 1 s (1 segundo arriba y otro abajo).
-`include "Pruebas_motor/freq_div.v"
+//`include "Pruebas_motor/freq_div.v"
 
-module reloj(clk,clk_out);
+module Prueba1(clk,clk_out);
     input clk;
     output reg clk_out;
     wire clk_output;
@@ -14,6 +14,15 @@ module reloj(clk,clk_out);
         clk_out <= clk_output;
     end    
 endmodule
+
+
+
+
+
+
+
+
+
 
 
 
