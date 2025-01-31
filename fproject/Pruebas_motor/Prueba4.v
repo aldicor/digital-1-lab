@@ -1,38 +1,39 @@
 //  Esta prueba consiste el simular una velocidad: se enciende el servomotor en una dirección y luego se detiene por otro tiempo, y así
 //`include "Pruebas_motor/pulso.v"
 
-module Prueba4(clk,diodo);
+module Prueba4(clk,pwm,led);
     input clk;
-    output reg diodo;
-    wire clk_out, diodo_wire;
+    output pwm,led;
+    wire clk_out;
+
     reg[3:0] counter; // Puede contar hasta el número 15
-    reg [1:0] sel;
+    reg [2:0] sel;
 
     initial begin
         counter = 4'b0;
-        sel = 2'd0;
+        sel = 3'd0;
     end    
 
-    Prueba1 clk_1s(
-        .clk(clk),
-        .clk(clk_out)
+    clockdiv #(50000000) reloj1(
+        .clkin(clk),
+        .clkout(clk_out)
     );
 
-    always @(clk_out)begin
+    always @(posedge clk_out)begin
         counter <= counter + 1;
-        if(counter<12)begin
-            sel <= 2'd0;
+        if(counter==2)begin
+            sel <= sel +3'd1;
+				counter <= 0;
         end
-        else begin
-            sel <= 2'd3; // El sel 3 es una señal 0 constante
+			if (sel == 4) begin
+            sel <=0;
         end        
     end    
     pulso velocidad3(
         .clk(clk),
-        .sel(2'd2),
-        .signal(diodo_wire)
+        .sel(sel),
+        .signal(pwm)
     );
-    always @(*)begin
-        diodo <= diodo_wire;
-    end   
+    assign led = clk_out;
+     
 endmodule
