@@ -1,37 +1,44 @@
 `include "sumador.v"
 `timescale 1ps/1ps
 
-module sumador8b_tb();
+module sumador_tb();
     reg [7:0] a_tb,b_tb;
+    reg [1:0]  sel_tb;
     wire [8:0] sum_tb;
-    wire cout_tb;
 
-    sumador8b uut(
-        .a(a_tb),
-        .b(b_tb),
-        .sum(sum_tb),
-        .cout(cout_tb)
+    sumador uut(
+        .sel(sel_tb),
+        .baterias({a_tb, b_tb}),
+        .sum(sum_tb)
     );
     
     initial begin
-        a_tb = 8'd15;
-        b_tb = 8'd12;
+        a_tb = 8'b11111111;
+        b_tb = 8'b11111111;
+        sel_tb = 1'b0;
         #1;
-        a_tb = 8'd5;
-        b_tb = 8'd5;
+        sel_tb = 1'b1;
         #1;
+        a_tb = 8'b11111111;
+        b_tb = 8'd0;
+        sel_tb = 1'b0;
+        #1;
+        sel_tb = 1'b1;
+        #1
         a_tb = 8'd6;
         b_tb = 8'd13;
+        sel_tb = 1'b0;
         #1;
-        a_tb = 8'd255;
-        b_tb = 8'd255;
+        a_tb = 8'd80;
+        b_tb = 8'd65;
+        sel_tb = 1'b1;
         #1;
     end
     
     initial begin: TEST_CASE
         $dumpfile("sumador_tb.vcd");
         $dumpvars(-1,uut);
-        #4 $finish;     
+        #6 $finish;     
     end
 
 endmodule

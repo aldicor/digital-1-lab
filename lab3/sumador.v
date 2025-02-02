@@ -29,8 +29,8 @@ module sumador(sel, baterias, sum);
         .cout(sum2[4])
     );
     sumador8b sum8ins2(
-        .a(sum1[3:0]),
-        .b(sum2[3:0]),
+        .a(sum1[4:0]),
+        .b(sum2[4:0]),
         .sum(sum_case1[7:0]),
         .cout(sum_case1[8])
     );
@@ -87,10 +87,11 @@ module sumador8b(a, b, sum, cout);
         .sum(sum[3:0]),
         .cout(ctem)
     );
-    sumador4b bits5_8(
+    sumador4b_cin bits5_8(
         .a(a[7:4]),
         .b(b[7:4]),
         .sum(sum[7:4]),
-        .cout(cout)
+        .cout(cout),
+        .cin(ctem)
     );
 endmodule

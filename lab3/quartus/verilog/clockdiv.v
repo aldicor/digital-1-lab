@@ -1,18 +1,18 @@
-module clockdiv #(parameter div = 16'd806452)(clin, clout);
-    input clin;
-    output reg clout;
+module clockdiv #(parameter n = 50000000) (clkin, clkout);
+    input   clkin;
+    output reg clkout;
 
-    reg [15:0] count = 16'd0;
-
+    reg [26:0] count = 0;
+    
     initial begin
-        clout <= 0;
-    end
-    always @(posedge clin) begin
-        count <= count + 16'd1;
-        if (count == div-1) begin
-            count <= 16'd0;
-            clout <= ~clout;
-        end
+        clkout = 0;
     end
 
+    always @(posedge clkin) begin
+        count <= count  + 1;
+        if (count == n-1) begin
+            count <=0;
+        end
+        clkout <= (count-1<n/2)?1'b1:1'b0;
+    end
 endmodule

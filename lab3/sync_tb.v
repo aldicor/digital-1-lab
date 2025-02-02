@@ -1,5 +1,5 @@
-`include "sync.v"
-`timescale 1ns/1ns
+//`include "sync.v"
+//`timescale 1ns/1ns
 
 module binBCD_tb();
     reg  [8:0] sum_tb;

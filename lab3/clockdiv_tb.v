@@ -5,29 +5,23 @@ module tb_clockdiv;
     reg clin;
     wire clout, clout2, clout3;
 
-    clockdiv #(
-        .div(16'd4)
-    ) uut (             
-        .clin(clin),
-        .clout(clout)
+    clockdiv #(2) uut (             
+        .clkin(clin),
+        .clkout(clout)
     );
 
-    clockdiv #(
-        .div(16'd2)
-    ) uut2 (             
-        .clin(clin),
-        .clout(clout2)
+    clockdiv #(3) uut2 (             
+        .clkin(clin),
+        .clkout(clout2)
     );
 
-    clockdiv #(
-        .div(16'd3)
-    ) uut3 (             
-        .clin(clin),
-        .clout(clout3)
+    clockdiv #(4) uut3 (             
+        .clkin(clin),
+        .clkout(clout3)
     );
 
     initial begin
-        clin = 0;
+        clin= 0;
         forever #50 clin = ~clin;
     end
 

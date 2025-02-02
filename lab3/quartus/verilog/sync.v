@@ -24,7 +24,7 @@ module sync(sel_t,baterias, clock, ssg, nseg,light);
     
     sumador sum1ns(.sel(sel),.baterias(baterias),.sum(sum));
 
-    clockdiv cl1ms(.clin(clock), .clout(clock1ms));
+    clockdiv #(50_000) cl62hz(.clkin(clock), .clkout(clock1ms));
 
     bin2BCD  decbin(.sum(sum), .bcd(b2BCD), .clk(clock1ms), .nseg(nseg));
     BCDssg   sseg(.BCD(b2BCD), .ssg(ssg));        

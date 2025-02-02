@@ -2,9 +2,9 @@ module BCDssg(BCD, ssg);
     input [3:0] BCD;
     output reg [6:0] ssg;
 
-	always @(BCD) begin
+	always @(*) begin
 		case(BCD)
-		 	4'h0: ssg = 7'b0000001;
+		 	4'h0: ssg = 7'b0000001; //abcdefg
 			4'h1: ssg = 7'b1001111;
 			4'h2: ssg = 7'b0010010;
 			4'h3: ssg = 7'b0000110;

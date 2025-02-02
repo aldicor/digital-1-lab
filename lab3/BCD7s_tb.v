@@ -9,11 +9,31 @@ module BCD7s_tb();
         .ssg(ssg_tb)
     );
     initial begin
+        BCD_tb = 4'h1;
+        #1;
+        BCD_tb = 4'h2;
+        #1
+        BCD_tb = 4'h3;
+        #1
+        BCD_tb = 4'h4;
+        #1;
+        BCD_tb = 4'h5;
+        #1;
+        BCD_tb = 4'h6;
+        #1;
+        BCD_tb = 4'h7;
+        #1;
+        BCD_tb = 4'h8;
+        #1;
+        BCD_tb = 4'h9;
+        #1;
         BCD_tb = 4'ha;
         #1;
         BCD_tb = 4'hb;
         #1;
-        BCD_tb = 4'h9;
+        BCD_tb = 4'hc;
+        #1;
+        BCD_tb = 4'hd;
         #1;
         BCD_tb = 4'he;
         #1;
@@ -23,7 +43,7 @@ module BCD7s_tb();
     initial begin: TEST_CASE
         $dumpfile("BCD7s_tb.vcd");
         $dumpvars(-1,uut);
-        #5 $finish;
+        #16 $finish;
     end
 endmodule
 
