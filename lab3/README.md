@@ -75,6 +75,12 @@ La idea es añadir un contador de los posedge del clock de entrada, cada posedge
 
 [Nota: Para que se pueda visualizar correctamente el comportamiento del divisor de frecuencia, no utilice el factor calculado para alternar la señal del ánodo del display de siete segmentos. En su lugar, emplee un factor que le permita observar claramente el funcionamiento del divisor durante la simulación.]:#
 
+![Simulación GTKwave del divisor de frecuencia](Imagenes/Divisor_freq_sim.jpeg "Simulación GTKwave del divisor de frecuencia")
+
+
+[![\\ clkout = \frac{2 * 400000}{50MHz} = 16ms](https://latex.codecogs.com/svg.latex?%5C%5C%20clkout%20%3D%20%5Cfrac%7B2%20*%20400000%7D%7B50MHz%7D%20%3D%2016ms)](#_)
+
+
 
 ### Simulación del bloque codificador de binario a BCD y decodificador BCD a 7 segmentos
 

@@ -1,0 +1,211 @@
+$date
+	Sun Feb  2 00:15:01 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module tb_clockdiv $end
+$scope module uut $end
+$var wire 1 ! clin $end
+$var parameter 16 " div $end
+$var reg 1 # clout $end
+$var reg 16 $ count [15:0] $end
+$upscope $end
+$upscope $end
+$scope module tb_clockdiv $end
+$scope module uut2 $end
+$var wire 1 ! clin $end
+$var parameter 16 % div $end
+$var reg 1 & clout $end
+$var reg 16 ' count [15:0] $end
+$upscope $end
+$upscope $end
+$scope module tb_clockdiv $end
+$scope module uut3 $end
+$var wire 1 ! clin $end
+$var parameter 16 ( div $end
+$var reg 1 ) clout $end
+$var reg 16 * count [15:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b11 (
+b10 %
+b100 "
+$end
+#0
+$dumpvars
+b0 *
+0)
+b0 '
+0&
+b0 $
+0#
+0!
+$end
+#50
+b1 $
+b1 '
+b1 *
+1!
+#100
+0!
+#150
+b10 *
+1&
+b0 '
+b10 $
+1!
+#200
+0!
+#250
+b11 $
+b1 '
+1)
+b0 *
+1!
+#300
+0!
+#350
+b1 *
+0&
+b0 '
+1#
+b0 $
+1!
+#400
+0!
+#450
+b1 $
+b1 '
+b10 *
+1!
+#500
+0!
+#550
+0)
+b0 *
+1&
+b0 '
+b10 $
+1!
+#600
+0!
+#650
+b11 $
+b1 '
+b1 *
+1!
+#700
+0!
+#750
+b10 *
+0&
+b0 '
+0#
+b0 $
+1!
+#800
+0!
+#850
+b1 $
+b1 '
+1)
+b0 *
+1!
+#900
+0!
+#950
+b1 *
+1&
+b0 '
+b10 $
+1!
+#1000
+0!
+#1050
+b11 $
+b1 '
+b10 *
+1!
+#1100
+0!
+#1150
+0)
+b0 *
+0&
+b0 '
+1#
+b0 $
+1!
+#1200
+0!
+#1250
+b1 $
+b1 '
+b1 *
+1!
+#1300
+0!
+#1350
+b10 *
+1&
+b0 '
+b10 $
+1!
+#1400
+0!
+#1450
+b11 $
+b1 '
+1)
+b0 *
+1!
+#1500
+0!
+#1550
+b1 *
+0&
+b0 '
+0#
+b0 $
+1!
+#1600
+0!
+#1650
+b1 $
+b1 '
+b10 *
+1!
+#1700
+0!
+#1750
+0)
+b0 *
+1&
+b0 '
+b10 $
+1!
+#1800
+0!
+#1850
+b11 $
+b1 '
+b1 *
+1!
+#1900
+0!
+#1950
+b10 *
+0&
+b0 '
+1#
+b0 $
+1!
+#2000
+0!
