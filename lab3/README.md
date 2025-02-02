@@ -77,8 +77,12 @@ La idea es añadir un contador de los posedge del clock de entrada, cada posedge
 
 ![Simulación GTKwave del divisor de frecuencia](Imagenes/Divisor_freq_sim.jpeg "Simulación GTKwave del divisor de frecuencia")
 
+Para la realización de la práctica, se implemento un factor div de divisor de frecuencia igual a 400000, teniendo en cuenta que la FPGA opera con una frecuencia de 50MHz y siguiente la ecuación que se muestre así se obtuvo el período del clock de salida igual a 16ms. Para lograr esto se aprovechó la función posedge (flanco positivo) de verilog.
 
-[![\\ clkout = \frac{2 * 400000}{50MHz} = 16ms](https://latex.codecogs.com/svg.latex?%5C%5C%20clkout%20%3D%20%5Cfrac%7B2%20*%20400000%7D%7B50MHz%7D%20%3D%2016ms)](#_)
+$$clkout = \frac{2 * 400000}{50MHz} = 16ms$$
+
+En la imagen de la simulación que se muestra, se ajustó un testbench para mostrar el funcionamiento  con un factor div diferente pere simplemente nos fijamos en que uut usa un factor de división de frecuencia de 2, uut2 usa 3 y uut3 divide la frecuencia por 4.
+
 
 
 
