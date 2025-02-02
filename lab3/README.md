@@ -83,7 +83,6 @@ $$clkout = \frac{2 * 400000}{50MHz} = 16ms$$
 
 En la imagen de la simulación que se muestra, se ajustó un testbench para mostrar el funcionamiento  con un factor div diferente pere simplemente nos fijamos en que uut usa un factor de división de frecuencia de 2, uut2 usa 3 y uut3 divide la frecuencia por 4.
 
-aaaa
 
 
 
