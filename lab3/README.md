@@ -77,7 +77,7 @@ La idea es añadir un contador de los posedge del clock de entrada, cada posedge
 
 ![Simulación GTKwave del divisor de frecuencia](Imagenes/Divisor_freq_sim.jpeg "Simulación GTKwave del divisor de frecuencia")
 
-Para la realización de la práctica, se implemento un factor div de divisor de frecuencia igual a 400000, teniendo en cuenta que la FPGA opera con una frecuencia de 50MHz y siguiente la ecuación que se muestre así se obtuvo el período del clock de salida igual a 16ms. Para lograr esto se aprovechó la función posedge (flanco positivo) de verilog.
+Para la realización de la práctica, se implemento un factor div de divisor de frecuencia igual a 400000, teniendo en cuenta que la FPGA opera con una frecuencia de 50MHz y siguiendo la ecuación que se muestra así se obtuvo el período del clock de salida igual a 16ms. Para lograr esto se aprovechó la función posedge (flanco positivo) de verilog.
 
 $$clkout = \frac{2 * 400000}{50MHz} = 16ms$$
 
@@ -118,6 +118,9 @@ Asimismo, aumentar el número de baterías implicó dividir los datos de entrada
 
 2. ¿Cuál es la diferencia entre displays de cátodo común y ánodo común, y cómo afecta esto al diseño del decodificador?
 
+Los displays de cátodo común se caracterizan porque internamente sus LEDs tienen sus cátodos conectados a un punto común a tierra (GND), por lo que para encenderlos es necesario aplicar un nivel lógico alto. Por otra parte, el display de ánodo común tendrá los ánodos de sus LEDs conectados todos a Vcc, por lo que la manera de encenderlos es aplicando un nivel bajo en sus cátodos.
+
+En este laboratorio los displays usados de la FPGA fueron de ánodo común, lo cual afecta directamente el diseño de decodificador porque sabemos que es necesario que el encendido de cada uno de los segmentos se haga con un nivel 0 lógico. Para ello fue necesario implementar una lógica escrita de manera concordante con esto.
 
 
 3.  Explique la implementación que realizó del divisor de frecuencia a nivel de flip flops describiendo cómo cada flip-flop contribuye a la división de la frecuencia de la señal de entrada y cómo se relacionan sus estados con la salida final.
