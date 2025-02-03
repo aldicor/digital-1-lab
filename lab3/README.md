@@ -81,16 +81,28 @@ Para la realización de la práctica, se implemento un factor div de divisor de 
 
 $$clkout = \frac{2 * 400000}{50MHz} = 16ms$$
 
-En la imagen de la simulación que se muestra, se ajustó un testbench para mostrar el funcionamiento  con un factor div diferente pere simplemente nos fijamos en que uut usa un factor de división de frecuencia de 2, uut2 usa 3 y uut3 divide la frecuencia por 4.
+En la imagen de la simulación que se muestra, se ajustó un testbench para mostrar el funcionamiento  con un factor div diferente, pero simplemente nos fijamos en que uut usa un factor de división de frecuencia de 2, uut2 usa 3 y uut3 divide la frecuencia por 4.
 
 
 
 
 ### Simulación del bloque codificador de binario a BCD y decodificador BCD a 7 segmentos
 
+Simulación del BCD a 7 segmentos:
 
+![Simulación GTKwave del BCD a 7 segmentos](Imagenes/sim_bcd7s.jpeg "Simulación GTKwave del BCD a 7 segmentos")
 
+Se evidencia en la imagen de la simulación como se corresponden de manera correcta los valores de BCD[3:0] que por facilidad visual se están representando en hexadecimal, con los valores binarios de ssg[6:0], donde cada bit fue asignado a su correspondiente segmento del 7 segmentos. Del bit más significativo al menos significativo se asignaron los segmentos a hasta g, teniendo en cuenta que el 0 lógico sería apagado y el 1 lógico encendido.
 
+Así mismo se anexa la simulación del bloque sumador:
+
+![Simulación GTKwave del sumador de baterias](Imagenes/sim_sum_baterias.jpeg "Simulación GTKwave del sumador")
+
+Finalmente la simulación del BCD junto con la suma, el selector de bit y el selector de encendido de uno de los 4 siete segmentos:
+
+![Simulación GTKwave](Imagenes/sim.jpeg "Simulación GTKwave")
+
+Se observa como el tiempo de subida del clock hace que se cambie de dígito en cada uno de los dígitos de la suma. Nseg es la señal de encendido para cada uno de los cuatro siete segmentos que se usaron (el de más a la izquierda se enciende en el último ciclo pero no representa información adicional), recordando que se usaba el 0 lógico para el encendido. 
 
 ## Implementación
 
