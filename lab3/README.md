@@ -75,12 +75,34 @@ La idea es añadir un contador de los posedge del clock de entrada, cada posedge
 
 [Nota: Para que se pueda visualizar correctamente el comportamiento del divisor de frecuencia, no utilice el factor calculado para alternar la señal del ánodo del display de siete segmentos. En su lugar, emplee un factor que le permita observar claramente el funcionamiento del divisor durante la simulación.]:#
 
+![Simulación GTKwave del divisor de frecuencia](Imagenes/Divisor_freq_sim.jpeg "Simulación GTKwave del divisor de frecuencia")
+
+Para la realización de la práctica, se implemento un factor div de divisor de frecuencia igual a 400000, teniendo en cuenta que la FPGA opera con una frecuencia de 50MHz y siguiendo la ecuación que se muestra así se obtuvo el período del clock de salida igual a 16ms. Para lograr esto se aprovechó la función posedge (flanco positivo) de verilog.
+
+$$clkout = \frac{2 * 400000}{50MHz} = 16ms$$
+
+En la imagen de la simulación que se muestra, se ajustó un testbench para mostrar el funcionamiento  con un factor div diferente, pero simplemente nos fijamos en que uut usa un factor de división de frecuencia de 2, uut2 usa 3 y uut3 divide la frecuencia por 4.
+
+
+
 
 ### Simulación del bloque codificador de binario a BCD y decodificador BCD a 7 segmentos
 
+Simulación del BCD a 7 segmentos:
 
+![Simulación GTKwave del BCD a 7 segmentos](Imagenes/sim_bcd7s.jpeg "Simulación GTKwave del BCD a 7 segmentos")
 
+Se evidencia en la imagen de la simulación como se corresponden de manera correcta los valores de BCD[3:0] que por facilidad visual se están representando en hexadecimal, con los valores binarios de ssg[6:0], donde cada bit fue asignado a su correspondiente segmento del 7 segmentos. Del bit más significativo al menos significativo se asignaron los segmentos a hasta g, teniendo en cuenta que el 0 lógico sería apagado y el 1 lógico encendido.
 
+Así mismo se anexa la simulación del bloque sumador:
+
+![Simulación GTKwave del sumador de baterias](Imagenes/sim_sum_baterias.jpeg "Simulación GTKwave del sumador")
+
+Finalmente la simulación del BCD junto con la suma, el selector de bit y el selector de encendido de uno de los 4 siete segmentos:
+
+![Simulación GTKwave](Imagenes/sim.jpeg "Simulación GTKwave")
+
+Se observa como el tiempo de subida del clock hace que se cambie de dígito en cada uno de los dígitos de la suma. Nseg es la señal de encendido para cada uno de los cuatro siete segmentos que se usaron (el de más a la izquierda se enciende en el último ciclo pero no representa información adicional), recordando que se usaba el 0 lógico para el encendido. 
 
 ## Implementación
 
@@ -96,6 +118,9 @@ Asimismo, aumentar el número de baterías implicó dividir los datos de entrada
 
 2. ¿Cuál es la diferencia entre displays de cátodo común y ánodo común, y cómo afecta esto al diseño del decodificador?
 
+Los displays de cátodo común se caracterizan porque internamente sus LEDs tienen sus cátodos conectados a un punto común a tierra (GND), por lo que para encenderlos es necesario aplicar un nivel lógico alto. Por otra parte, el display de ánodo común tendrá los ánodos de sus LEDs conectados todos a Vcc, por lo que la manera de encenderlos es aplicando un nivel bajo en sus cátodos.
+
+En este laboratorio los displays usados de la FPGA fueron de ánodo común, lo cual afecta directamente el diseño de decodificador porque sabemos que es necesario que el encendido de cada uno de los segmentos se haga con un nivel 0 lógico. Para ello fue necesario implementar una lógica escrita de manera concordante con esto.
 
 
 3.  Explique la implementación que realizó del divisor de frecuencia a nivel de flip flops describiendo cómo cada flip-flop contribuye a la división de la frecuencia de la señal de entrada y cómo se relacionan sus estados con la salida final.
