@@ -10,7 +10,7 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
     reg [5:0] yellow; // registro que permite conocer cual fue el ùltimo amarillo 
     output reg [4:0] counter_s; //
     output reg [4:0] counter_car;
-    output reg [3:0] t_add;
+    output reg [4:0] t_add;
     output reg [2:0] n;
     wire [2:0] tf0_t, tf1_t, tf2_t; 
 
@@ -35,7 +35,7 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
     initial begin
         counter_s <= 5'd0;
         t_add <= 3'd0;
-        n <= 5;
+        n <= 3;
         counter_car <=5'd0;
         yellow <= 6'b000100;
         green <= 6'b001000;
@@ -43,13 +43,13 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
         tfst <=6'b010101;
     end
 
-    always @(posedge  clk) begin
+    always @(posedge clk) begin
         case (state)
             init: begin
                 green  <= 6'b001000;
                 counter_s <= 5'b0;
                 yellow <= 6'b000100;
-                n <= 4;
+                n <= 3;
                 state <= cambio_verde;
             end
             cambio_verde: begin
@@ -62,7 +62,7 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
                 if(counter_s ==7) begin
                     counter_s <= 0;
                     state <= conteo;
-                    n <= 4;
+                    n <= 3;
                 end else counter_s <= counter_s +1;
             end 
             conteo: begin
@@ -102,14 +102,14 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
             end
             adicion: begin
                 if (counter_car  < 4) begin
-                    t_add <= 2;
-                end else if (counter_car  < 8) begin
-                    t_add <= 4;
-                end else if (counter_car  < 12) begin
                     t_add <= 8;
+                end else if (counter_car  < 8) begin
+                    t_add <= 12;
+                end else if (counter_car  < 12) begin
+                    t_add <= 16;
                 end else if (counter_car  < 16) begin
-                    t_add <= 10;
-                end else t_add <= 12;
+                    t_add <= 20;
+                end else t_add <= 24;
                 state <= espera_aditiva;
             end
             espera_aditiva: begin

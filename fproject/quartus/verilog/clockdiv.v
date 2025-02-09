@@ -13,6 +13,6 @@ module clockdiv #(parameter n = 50000000) (clkin, clkout);
         if (count == n-1) begin
             count <=0;
         end
-        clkout <= (count<n/2)?1'b1:1'b0;
+        clkout <= (count-1<n/2)?1'b1:1'b0;
     end
 endmodule
