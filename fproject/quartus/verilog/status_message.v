@@ -10,52 +10,37 @@ module status_message(message,state, tfst, ns_count, sn_count, ew_count, we_coun
 
     always @(*) begin
         if (state == espera_aditiva) begin
-            case (tfst)
-                6'b011111: begin //ns +sn
-                    message[7:0]   = "N";
-                    message[15:8]  = "S";
-                    message[23:16] = " ";
-                    message[31:24] = " ";
-                    message[39:32] = "Y";
-                    message[47:40] = " ";
-                    message[55:48] = "S";
-                    message[63:56] = "N";
-                    message[71:64] = " ";
-                end
-                6'b0110111: begin //ew
-                    message[7:0]   = "E";
-                    message[15:8]  = "S";
-                    message[23:16] = " ";
-                    message[31:24] = "-";
-                    message[39:32] = " ";
-                    message[47:40] = "W";
-                    message[55:48] = "E";
-                    message[63:56] = " ";
-                    message[71:64] = " ";
-                end
-                6'b111101: begin //we
-                    message[7:0]   = "W";
-                    message[15:8]  = "E";
-                    message[23:16] = " ";
-                    message[31:24] = "-";
-                    message[39:32] = " ";
-                    message[47:40] = "E";
-                    message[55:48] = "W";
-                    message[63:56] = " ";
-                    message[71:64] = " ";
-                end 
-                default: begin
-                    message[7:0]   = "N";
-                    message[15:8]  = "S";
-                    message[23:16] = " ";
-                    message[31:24] = " ";
-                    message[39:32] = "Y";
-                    message[47:40] = " ";
-                    message[55:48] = "S";
-                    message[63:56] = "N";
-                    message[71:64] = " "; 
-                end
-            endcase
+            if (tfst == 6'b100000) begin //ns +sn
+                message[7:0]   = "N";
+                message[15:8]  = "S";
+                message[23:16] = " ";
+                message[31:24] = " ";
+                message[39:32] = "Y";
+                message[47:40] = " ";
+                message[55:48] = "S";
+                message[63:56] = "N";
+                message[71:64] = " ";
+            end else if (tfst == 6'b001000) begin
+                message[7:0]   = "E";
+                message[15:8]  = "S";
+                message[23:16] = " ";
+                message[31:24] = "-";
+                message[39:32] = " ";
+                message[47:40] = "W";
+                message[55:48] = "E";
+                message[63:56] = " ";
+                message[71:64] = " ";
+            end else begin
+                message[7:0]   = "W";
+                message[15:8]  = "E";
+                message[23:16] = " ";
+                message[31:24] = "-";
+                message[39:32] = " ";
+                message[47:40] = "E";
+                message[55:48] = "W";
+                message[63:56] = " ";
+                message[71:64] = " "; 
+            end
             message[79:72]  = n + 8'd48;
             message[87:80]  = " ";
             message[95:88]  = "T";
