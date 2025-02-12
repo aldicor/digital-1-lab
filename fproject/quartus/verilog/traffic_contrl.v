@@ -95,11 +95,11 @@ module traffic_contrl(clk,reset, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_e
                         end
                     end else if (tfst == 6'b001000) begin
                         if((count_ew_4b - counter_car < counter_car)) begin
-                            counter_car <= count_ew_4b - counter_car;
+                            counter_car <= count_ew_4b - counter_car +32;
                         end else counter_car <= count_ew_4b - counter_car;
                     end else begin
                         if((count_we_4b - counter_car < counter_car)) begin
-                            counter_car <= count_we_4b - counter_car;
+                            counter_car <= count_we_4b - counter_car +32;
                         end else counter_car <= count_we_4b - counter_car;
                     end
                     counter_s <= 0;

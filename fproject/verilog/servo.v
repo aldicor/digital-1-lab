@@ -79,19 +79,21 @@ module servo(clk_10Hz, clk_10KHz,reset, vel, pwm_control, enable);
 
 
 
-    always @(posedge vel) begin
-        count_aux <= count_aux+1;
+    always @(posedge vel or posedge reset) begin
+        if (reset ==1) begin
+            count_aux <= 0;    
+        end else count_aux <= count_aux+1;
     end
 
     always @(posedge clk_10Hz or posedge reset) begin
-        if (reset) begin
+        if (reset ==1) begin
             speed <= 0;
             count_aux_prev <= 0;
-        end else if (count_aux != count_aux_prev) begin
+        end else if (count_aux != count_aux_prev && enable) begin
             speed <= speed + 1;
             count_aux_prev <= count_aux;
         end
-      end
+    end
 
 
 
