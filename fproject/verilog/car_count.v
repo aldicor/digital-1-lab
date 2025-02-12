@@ -1,5 +1,5 @@
-module car_count(clk, detector, count);
-    input  detector, clk; //2hz
+module car_count(clk, detector, count, reset);
+    input  detector, clk, reset; //2hz
     output reg [13:0] count; // representacion 4 digitos
 
     initial begin
@@ -13,8 +13,11 @@ module car_count(clk, detector, count);
         count_aux <= count_aux+1;
     end
 
-    always @(posedge clk) begin 
-        if (count_aux != count_aux_prev) begin
+    always @(posedge clk or posedge reset) begin 
+        if (reset==1) begin
+            count <= 0;
+        end
+        else if (count_aux != count_aux_prev) begin
             if (count == 10000) begin
                 count <= 0;
             end else begin

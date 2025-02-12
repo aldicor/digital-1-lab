@@ -1,7 +1,6 @@
 module bin2BCD(num, bcd);
     input  [13:0] num;
     output reg [15:0] bcd;
-    reg [1:0] sel;
     initial begin
         bcd <= 16'd0;
     end

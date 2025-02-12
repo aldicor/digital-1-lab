@@ -1,0 +1,15 @@
+-- begin_signature
+-- servo
+-- end_signature
+WIDTH=5;
+DEPTH=4;
+
+ADDRESS_RADIX=UNS;
+DATA_RADIX=BIN;
+
+CONTENT BEGIN
+	3 :	01100;
+	2 :	10001;
+	1 :	01100;
+	0 :	00111;
+END;

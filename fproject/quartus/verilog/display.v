@@ -1,5 +1,5 @@
-module display(clock, message_in,en, rs, rw, D);
-    input clock; //clock 16ms -62hz
+module display(clock, reset, message_in,en, rs, rw, D);
+    input clock, reset; //clock 16ms -62hz
     output en;
     output reg rs, rw; 
     output reg [7:0] D;
@@ -25,8 +25,11 @@ module display(clock, message_in,en, rs, rw, D);
         rw <= 0;
         char_index <=0;
     end
-    always @(posedge clock) begin
-        case (state)
+    always @(posedge clock or posedge reset) begin
+        if (reset ==1) begin
+            state <= init_counter;
+        end
+        else case (state)
             init_co:begin
                 init_counter <= init_counter +1;
                 rw <= 0; // solo se escriben datos

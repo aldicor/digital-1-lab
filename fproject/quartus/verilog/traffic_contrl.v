@@ -1,5 +1,5 @@
-module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, count_we_4b, counter_s, counter_car, t_add, state, n);
-    input clk;
+module traffic_contrl(clk,reset, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, count_we_4b, counter_s, counter_car, t_add, state, n);
+    input clk,reset;
     input [3:0 ] count_ns_4b,count_sn_4b, count_ew_4b, count_we_4b;
     output [2:0] tf0, tf1, tf2; 
 
@@ -34,23 +34,29 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
 
     initial begin
         counter_s <= 5'd0;
-        t_add <= 3'd0;
-        n <= 3;
+        t_add <= 4'd0;
+        n <= 4;
         counter_car <=5'd0;
         yellow <= 6'b000100;
         green <= 6'b001000;
         state <= init;
-        tfst <=6'b010101;
+        tfst <=6'b000000;
     end
 
-    always @(posedge clk) begin
-        case (state)
+    always @(posedge  clk or posedge reset) begin
+        if (reset ==1) begin
+            state <=init;
+        end 
+        else case (state)
             init: begin
-                green  <= 6'b001000;
-                counter_s <= 5'b0;
+                counter_s <= 5'd0;
+                t_add <= 4'd0;
+                n <= 4;
+                counter_car <=5'd0;
                 yellow <= 6'b000100;
-                n <= 3;
+                green <= 6'b001000;
                 state <= cambio_verde;
+                tfst <=6'b000000;
             end
             cambio_verde: begin
                 if(counter_s ==0)begin
@@ -62,7 +68,7 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
                 if(counter_s ==7) begin
                     counter_s <= 0;
                     state <= conteo;
-                    n <= 3;
+                    n <= 4;
                 end else counter_s <= counter_s +1;
             end 
             conteo: begin
@@ -129,7 +135,7 @@ module traffic_contrl(clk, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_ew_4b, 
                 end
             end
             espera_rojo: begin
-                if (counter_s == 14) begin
+                if (counter_s == 20) begin
                     counter_s <= 0;
                     state <= cambio_verde;
                 end else begin

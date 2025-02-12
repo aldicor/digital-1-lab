@@ -22,24 +22,24 @@ module status_message(message,state, tfst, ns_count, sn_count, ew_count, we_coun
                 message[71:64] = " ";
             end else if (tfst == 6'b001000) begin
                 message[7:0]   = "E";
-                message[15:8]  = "S";
-                message[23:16] = " ";
-                message[31:24] = "-";
-                message[39:32] = " ";
+                message[15:8]  = "A";
+                message[23:16] = "S";
+                message[31:24] = "T";
+                message[39:32] = "-";
                 message[47:40] = "W";
                 message[55:48] = "E";
-                message[63:56] = " ";
-                message[71:64] = " ";
+                message[63:56] = "S";
+                message[71:64] = "T";
             end else begin
                 message[7:0]   = "W";
                 message[15:8]  = "E";
-                message[23:16] = " ";
-                message[31:24] = "-";
-                message[39:32] = " ";
+                message[23:16] = "S";
+                message[31:24] = "T";
+                message[39:32] = "-";
                 message[47:40] = "E";
-                message[55:48] = "W";
-                message[63:56] = " ";
-                message[71:64] = " "; 
+                message[55:48] = "A";
+                message[63:56] = "S";
+                message[71:64] = "T"; 
             end
             message[79:72]  = n + 8'd48;
             message[87:80]  = " ";

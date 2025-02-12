@@ -1,7 +1,7 @@
-module top(clk_50MHz, tf0, tf1, tf2,
+module top(clk_50MHz, reset, tf0, tf1, tf2,
             detect_ns, detect_sn, detect_ew, detect_we,
             en, rs, rw, D, pwm, vel);
-    input clk_50MHz, detect_ns, detect_sn, detect_ew, detect_we; 
+    input clk_50MHz, reset, detect_ns, detect_sn, detect_ew, detect_we; 
     output [3:0] pwm;
     input [1:0] vel;
     output [2:0] tf0, tf1, tf2;
@@ -13,17 +13,17 @@ module top(clk_50MHz, tf0, tf1, tf2,
     wire clk_2Hz;
     clockdiv #(.n(25_000_000)) clock_2hz_ins(.clkin(clk_50MHz), .clkout(clk_2Hz));
 
-    car_count ns_ins(.clk(clk_2Hz),.detector(detect_ns), .count(count_ns));
-    car_count sn_ins(.clk(clk_2Hz),.detector(detect_sn), .count(count_sn));
-    car_count ew_ins(.clk(clk_2Hz),.detector(detect_ew), .count(count_ew));
-    car_count we_ins(.clk(clk_2Hz),.detector(detect_we), .count(count_we));
+    car_count ns_ins(.clk(clk_2Hz),.detector(detect_ns), .count(count_ns), .reset(reset));
+    car_count sn_ins(.clk(clk_2Hz),.detector(detect_sn), .count(count_sn), .reset(reset));
+    car_count ew_ins(.clk(clk_2Hz),.detector(detect_ew), .count(count_ew), .reset(reset));
+    car_count we_ins(.clk(clk_2Hz),.detector(detect_we), .count(count_we), .reset(reset));
 
     wire [4:0] t_add;
     wire [4:0] counter_s; //
     wire [4:0] counter_car; 
     wire [2:0] n; 
     wire [2:0] state;
-    traffic_contrl traffic_contrl_ins(.clk(clk_2Hz), .tf0(tf0), .tf1(tf1), .tf2(tf2), 
+    traffic_contrl traffic_contrl_ins(.clk(clk_2Hz), .reset(reset), .tf0(tf0), .tf1(tf1), .tf2(tf2), 
                                     .count_ns_4b(count_ns[3:0]),.count_sn_4b(count_sn[3:0]), 
                                     .count_ew_4b(count_ew[3:0]), .count_we_4b(count_we[3:0]),
                                     .counter_s(counter_s), .counter_car(counter_car), .t_add(t_add), .state(state), .n(n));
@@ -51,7 +51,7 @@ module top(clk_50MHz, tf0, tf1, tf2,
 
     clockdiv #(.n(800_000)) clock_62hz_ins(.clkin(clk_50MHz), .clkout(clk_62hz));
 
-    display dis16x2(.clock(clk_62hz), .message_in(message),
+    display dis16x2(.clock(clk_62hz), .reset(reset), .message_in(message),
                             .en(en), .rs(rs), .rw(rw), .D(D));
     
 
