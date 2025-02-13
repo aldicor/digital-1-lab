@@ -2,7 +2,7 @@
 `include "quartus/verilog/servo.v"
 module servo_tb;
     reg clk_10Hz, clk_10KHz;
-    reg vel, enable;
+    reg vel, enable, reset;
     wire pwm_control;
     
     // Instantiate the DUT (Device Under Test)
@@ -11,7 +11,8 @@ module servo_tb;
         .clk_10KHz(clk_10KHz),
         .vel(vel),
         .pwm_control(pwm_control),
-        .enable(enable)
+        .enable(enable),
+        .reset(reset)
     );
     
     // Clock generation
@@ -29,21 +30,12 @@ module servo_tb;
     initial begin
         $dumpfile("servo_tb.vcd");
         $dumpvars(-1, uut);
-
+        reset =1;
         // Initialize inputs
         vel = 0;
         enable = 0;
-        #200; // Wait for some time
-        
-        // Enable servo and test different velocities
-        enable = 1;
-        #500;
-        vel = 1;
-        #1000;
-        vel = 0;
-        #1000;
-
-        
+       #2 
+       reset =0; 
         // Finish simulation
         #4000000$finish;
     end

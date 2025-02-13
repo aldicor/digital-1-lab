@@ -1,15 +1,15 @@
 `include "verilog/traffic_contrl.v"
-
+`include "verilog/trafficlight.v"
 `timescale 1ns / 1ns
 
 module traffic_contrl_tb();
     reg  [3:0] count_ns_4b,count_sn_4b, count_ew_4b, count_we_4b;
-    reg  clk;
-    wire [3:0] bcd;
+    reg  clk, reset;
     wire [2:0] tf0, tf1, tf2;
 
     traffic_contrl uut(
         .clk(clk), 
+        .reset(reset),
         .tf0(tf0), 
         .tf1(tf1),
         .tf2(tf2),
@@ -25,6 +25,7 @@ module traffic_contrl_tb();
     end 
 
     initial begin
+        reset =0;
         #15;
         count_ns_4b = 4'd4;
         count_sn_4b = 4'd4;

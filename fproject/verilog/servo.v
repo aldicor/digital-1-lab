@@ -31,6 +31,7 @@ module servo(clk_10Hz, clk_10KHz,reset, vel, pwm_control, enable);
     initial begin
         signal <= 1'b1;
         counter_us <= 7'd0;
+        counter_ms <= 4'd0;
         state_pwm <= 1'b0;
         state_vel <= 1'b0;
         angle_count <= 3'd0;

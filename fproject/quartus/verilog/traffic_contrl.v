@@ -51,7 +51,7 @@ module traffic_contrl(clk,reset, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_e
             init: begin
                 counter_s <= 5'd0;
                 t_add <= 4'd0;
-                n <= 4;
+                n <= 3;
                 counter_car <=5'd0;
                 yellow <= 6'b000100;
                 green <= 6'b001000;
@@ -68,7 +68,7 @@ module traffic_contrl(clk,reset, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_e
                 if(counter_s ==7) begin
                     counter_s <= 0;
                     state <= conteo;
-                    n <= 4;
+                    n <= 5;
                 end else counter_s <= counter_s +1;
             end 
             conteo: begin
@@ -112,10 +112,10 @@ module traffic_contrl(clk,reset, tf0, tf1, tf2, count_ns_4b,count_sn_4b, count_e
                 end else if (counter_car  < 8) begin
                     t_add <= 12;
                 end else if (counter_car  < 12) begin
-                    t_add <= 16;
-                end else if (counter_car  < 16) begin
                     t_add <= 20;
-                end else t_add <= 24;
+                end else if (counter_car  < 15) begin
+                    t_add <= 20;
+                end else t_add <= 28;
                 state <= espera_aditiva;
             end
             espera_aditiva: begin
